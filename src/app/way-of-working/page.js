@@ -60,50 +60,49 @@ export default function WayOfWorking() {
 
       <h2>Do not reinvent the wheel</h2>
       <p>
-        Instead of stepping into the {' '}
+        Instead of falling into the {' '}
         <a href="https://en.wikipedia.org/wiki/Not_invented_here#In_computing">&quot;NIH Syndrom&quot;</a>
-        {' '}trap, we should rely on FOSS solutions for problems that have been
-        solved already. This way we don&apos;t have the maintenance burden of
+        {' '}trap, we should rely on FOSS solutions for problems that have already been
+        solved. This way we won&apos;t have the maintenance burden of
         keeping the solutions alive or improving them while reaping the benefits of
-        improvements and benefits.
+        improvements.
       </p>
 
       <p>
         Code should only be written for domain-specific problems that can&apos;t be
         addressed by using public solutions and then composed with the
-        available tools mentioned above. This way the code base stays as small as
-        possible and maintenance to a minimum.
+        available tools mentioned above. This way, the codebase stays as small as
+        possible, and maintenance remains at a minimum.
       </p>
 
       <h2>Simplicity is the key</h2>
       <p>
-        Simplicity is the key to a maintainable, scalable and usable software.
-        This does not just apply to code and architecture, but to user
-        interfaces, documentation and communication as well. In regards to
+        Simplicity is the key to maintainable, scalable, and usable software.
+        This principle applies not only to code and architecture but also to
+        user interfaces, documentation, and communication. Regarding
         importance, I follow the{' '}
         <a href="https://en.wikipedia.org/wiki/Worse_is_better#New_Jersey_style">&quot;New Jersey Style&quot;</a>
-        {' '}model of software design. At least in parts, especially {' '}
-        <i>&quot;Simplicity is the most important consideration in a
-        design&quot;</i>, although I think that the interface should be
-        equally simple as the interface as the user interface must be as accessible as
-        possible.
+        {' '}model of software design, at least in parts — especially &quot;Simplicity
+        is the most important consideration in a design.&quot; However, I believe
+        that the interface should be as simple as possible, as the user interface
+        must be as accessible as possible.
       </p>
 
       <p>
         The perception of the software by the target audience can make the
-        difference between success and losing to a competitor. Therefore it&apos;s
-        necessary to provide an intuitive user interface so that users don&apos;t
-        have to think about how they can do what they want to do. They should
-        be able to just do it.
+        difference between success and losing to a competitor. Therefore, it&apos;s
+        necessary to provide an intuitive user interface so that users don&apos;t have
+        to think about how to accomplish what they want to do. They should be
+        able to just do it.
       </p>
 
       <h3>Simple software</h3>
       <p>
         Simple software is easy to maintain because it is easy to understand
-        how it works and where to find the code that needs to be found. The
-        following text can be found on {' '}
+        how it works and where to find the necessary code. The following text
+        can be found on{' '}
         <a href="https://suckless.org/philosophy/">suckless.org/philosophy</a>
-        {' '} and has been adjusted slightly by me:
+        {' '} and has been slightly adjusted by me:
       </p>
         
       <blockquote cite="https://suckless.org/philosophy/">
@@ -116,14 +115,14 @@ export default function WayOfWorking() {
         
       <p>
         The user interface should be simple enough that it can be used
-        intuitively by inexperience users (e.g. the older demographic) while
-        powerusers can navigate and interact efficiently and effortlessly.
+        intuitively by inexperienced users (e.g., the older demographic), while
+        power users can navigate and interact efficiently and effortlessly.
       </p>
         
       <p>
         Designing simple and elegant software is far more difficult than
-        letting ad-hoc or over-ambitious features obscure the code over time.
-        However one has to pay this price to achieve reliability and
+        allowing ad-hoc or over-ambitious features to obscure the code over
+        time. However, one has to pay this price to achieve reliability and
         maintainability. Furthermore, minimalism results in reasonable and
         attainable goals. I strive to maintain minimalism and clarity to drive
         development to completion.
@@ -150,19 +149,19 @@ export default function WayOfWorking() {
       <p>
         Designing the code and its architecture follows the evolutionary design
         philosophy. It&apos;s impossible to know what the code will look like
-        eventually. Therefore it make sense to sit down with the team and
-        dicuss how to implement the next feature only. This will include how
-        code could potentially be refactored before any new code has been
+        eventually. Therefore, it makes sense to sit down with the team and
+        discuss how to implement the next feature only. This will include how
+        the code could potentially be refactored before any new code has been
         written. But that refactoring should only be on a small scale. Bigger
-        refactors should happen on purpose in intervals instead of just when an
-        obvious need get visible. This allows the developers to keep the code base
-        as simple as possible, as the goal of the refactor is to make the code simpler.
-        This could be done by adding or removing(!) abstractions.
-        I find that a good way of approach this kind of refactoring is to reduce coupling
-        and achieve a reasonable level of cohesion. {' '}
+        refactors should happen on purpose at intervals instead of just when an
+        obvious need becomes visible. This allows the developers to keep the codebase
+        as simple as possible, as the goal of the refactor is to make the code
+        simpler. This could be achieved by adding or removing(!) abstractions. I find
+        that a good approach to this kind of refactoring is to reduce coupling and
+        achieve a reasonable level of cohesion.{' '}
         <a href="Cohesion and Coupling in Software with Examples">Cohesion and
-        Coupling in Software with Examples</a> {' '} is a very good article
-        that not only explains which types of coupling and cohesion exist, but
+        Coupling in Software with Examples</a> {' '}is a very good article that
+        not only explains the types of coupling and cohesion that exist but
         also how much cohesion should be strived for.
       </p>
     </div>
