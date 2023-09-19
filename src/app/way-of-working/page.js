@@ -1,5 +1,9 @@
 import classes from './page.module.css'
 
+export const metadata = {
+  title: 'Mohammer5\'s Way of Working',
+}
+
 export default function WayOfWorking() {
   return (
     <div className={classes.wayOfWorking}>

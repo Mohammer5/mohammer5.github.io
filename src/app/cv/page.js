@@ -1,10 +1,18 @@
 import classes from './page.module.css'
 
+export const metadata = {
+  title: 'Mohammer5\'s CV',
+}
+
 export default function CV() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.content}>
-        <h1 className={classes.title}>Curriculum Vitae - Jan-Gerke Salomon</h1>
+        <h1 className={classes.title}>
+          Curriculum Vitae
+          <br />
+          Jan-Gerke Salomon
+        </h1>
         <h2 className={classes.subtitle}>Software Engineer</h2>
 
         <p className={classes.introText}>
