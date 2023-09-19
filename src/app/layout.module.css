@@ -1,0 +1,31 @@
+.page {
+  min-height: 100vh;
+  font-size: 14px;
+  background: #f0f0f0;
+  padding: 16px 0;
+  font-weight: 300;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 40px 32px;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: calc(100vh - 32px);
+  background: white;
+  box-shadow: 0 0 3px rgba(0,0,0,0.4);
+  display: flex;
+  gap: 32px;
+}
+
+@media screen and (max-width: 900px) {
+  .page {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    display: block;
+  }
+}

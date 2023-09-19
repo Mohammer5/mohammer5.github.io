@@ -1,0 +1,163 @@
+.wrapper {
+  display: flex;
+  gap: 32px;
+}
+
+.content {
+  flex-grow: 1;
+  width: 50%;
+}
+
+.title {
+  margin: 0 0 8px;
+  color: rgb(68, 104, 177);
+  text-decoration: underline;
+  font-size: 32px;
+}
+
+.subtitle {
+  margin: 0 0 16px;
+  font-size: 24px;
+  color: rgb(102, 102, 102);
+  font-weight: bold;
+}
+
+.introText {
+  font-size: 14px;
+  margin: 0 0 32px;
+  font-weight: 300;
+}
+
+.workExpHl {
+  font-size: 14px;
+  color: rgb(68, 104, 177);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgb(68, 104, 177);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.section + .section {
+  margin-top: 32px;
+}
+
+.job {
+  margin: 0 0 16px;
+  display: grid;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(102, 102, 102);
+  grid-template-areas:
+    'company tenure'
+    'posLoc posLoc';
+}
+
+.company {
+  grid-area: company;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.posLoc {
+  grid-area: posLoc;
+}
+
+.tenure {
+  grid-area: tenure;
+  text-align: right;
+  color: black;
+}
+
+.tasks {
+  list-style: none;
+  color: rgb(102, 102, 102);
+}
+
+.task {
+  position: relative;
+  padding-left: 24px;
+}
+
+.task:before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  height: 4px;
+  width: 4px;
+  background: rgb(68, 104, 177);
+  border-radius: 2px;
+}
+
+.task + .task {
+  margin-top: 4px;
+}
+
+.aside {
+  flex-grow: 0;
+  width: 28%;
+  background: #f0f0f0;
+  padding: 16px;
+  color: #666;
+  font-size: 12px;
+}
+
+.asideSection + .asideSection {
+  margin-top: 16px;
+}
+
+.asideListTite {
+  margin: 0 0 4px;
+  font-style: italic;
+}
+
+.asideList {
+  list-style: none;
+}
+
+.asideList:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.asideList :global(li) {
+  position: relative;
+  padding-left: 16px;
+}
+
+.asideList :global(li):before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  height: 4px;
+  width: 4px;
+  background: #666;
+  border-radius: 2px;
+}
+
+.asideList :global(a) {
+  color: rgb(68, 104, 177);
+}
+
+.asideTitle {
+  font-size: 14px;
+  color: rgb(68, 104, 177);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgb(68, 104, 177);
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+
+.educationData :global(b), .educationData :global(span) {
+  line-height: 1.4;
+}
+
+@media screen and (max-width: 768px) {
+  .content, .aside {
+    width: 100%;
+  }
+
+  .content {
+    margin-bottom: 32px;
+  }
+}

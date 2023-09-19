@@ -1,0 +1,72 @@
+.title {
+  margin: 0 0 32px;
+  color: rgb(68, 104, 177);
+  text-decoration: underline;
+  font-size: 32px;
+}
+
+.wayOfWorking .introText {
+  font-size: 18px;
+  margin: 0 0 16px;
+}
+
+.referenceList {
+  list-style: none;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.referenceList :global(li) {
+  position: relative;
+  padding-left: 16px;
+  margin: 16px 0;
+}
+
+.referenceList :global(li):before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  height: 4px;
+  width: 4px;
+  background: rgb(68, 104, 177);
+  border-radius: 2px;
+}
+
+.referenceList :global(a) {
+  display: block;
+}
+
+.wayOfWorking :global(h2) {
+  font-size: 28px;
+  margin: 40px 0 24px;
+}
+
+.wayOfWorking :global(h3) {
+  font-size: 22px;
+  margin: 24px 0;
+}
+
+.wayOfWorking :global(h4) {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 24px 0 0;
+}
+
+.wayOfWorking :global(p) {
+  font-size: 18px;
+  margin: 0 0 8px;
+  max-width: 700px;
+}
+
+.wayOfWorking :global(blockquote) {
+  font-size: 18px;
+  margin: 16px 0;
+  max-width: 700px;
+  padding-left: 40px;
+}
+
+.wayOfWorking :global(a) {
+  color: rgb(68, 104, 177);
+  text-decoration: underline;
+}
