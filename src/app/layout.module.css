@@ -11,7 +11,8 @@
   align-items: center;
   height: 40px;
   width: 100%;
-  max-width: 900px;
+  max-width: 932px;
+  padding: 0 16px;
   margin: 0 auto;
   color: rgb(68, 104, 177);
 }

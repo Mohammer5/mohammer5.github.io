@@ -153,6 +153,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .wrapper {
+    display: block;
+  }
+
   .content, .aside {
     width: 100%;
   }
