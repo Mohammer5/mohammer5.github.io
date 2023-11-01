@@ -14,6 +14,7 @@ export default function Home() {
       <ul className={classes.linkList}>
         <li><Link href="/cv">CV</Link></li>
         <li><Link href="/way-of-working">WIP: Way of working</Link></li>
+        <li><Link href="/about-me">About me</Link></li>
       </ul>
     </div>
   )
