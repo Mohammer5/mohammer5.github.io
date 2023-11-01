@@ -1,1 +1,257 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="font" href="/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2" crossorigin="" type="font/woff2"/><link rel="stylesheet" href="/_next/static/css/d1b31cbb0886368a.css" data-precedence="next"/><link rel="stylesheet" href="/_next/static/css/e4e54e349431bea1.css" data-precedence="next"/><link rel="preload" href="/_next/static/chunks/webpack-f91e38af2b0d8753.js" as="script" fetchPriority="low"/><script src="/_next/static/chunks/fd9d1056-a99b58d3cc150217.js" async=""></script><script src="/_next/static/chunks/596-9d43875837bd0b65.js" async=""></script><script src="/_next/static/chunks/main-app-1529d3c4bb8876e5.js" async=""></script><title>Mohammer5&#x27;s Way of Working</title><link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="16x16"/><meta name="next-size-adjust"/><script src="/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js" noModule=""></script></head><body class="__className_e66fe9"><div class="layout_page__ZPT7X"><div class="layout_homeLink__CGEGG"><a href="/">Home</a></div><div class="layout_wrapper__zNuca"><div class="page_wayOfWorking__MTgpg"><h1 class="page_title__rsu00">Way of working</h1><p class="page_introText__HpEbC">On this page, I&#x27;ll describe very briefly the ideal development situation I&#x27;d like to work in. This will cover code-related topics but also team work and organizing tasks.</p><p>Overall I think that Martin Fowler&#x27;s blog covers a lot of ideas I align with, here are some examples:</p><ul class="page_referenceList__jLg4_"><li>On evolutionary design: <!-- --> <a href="https://www.martinfowler.com/articles/designDead.html">Is Design Dead?</a></li><li>On why software quality matter: <!-- --> <a href="https://martinfowler.com/articles/is-quality-worth-cost.html">Is High Quality Software Worth the Cost?</a></li><li>On opportunistic refactoring: <!-- --> <a href="https://martinfowler.com/bliki/OpportunisticRefactoring.html">OpportunisticRefactoring</a></li><li>On why testing extensively matters: <!-- --> <a href="https://martinfowler.com/bliki/SelfTestingCode.html">SelfTestingCode</a></li></ul><p>Here are some other links that I really like and describe my way of thinking/working, so I don&#x27;t have to duplicate it here :)</p><ul class="page_referenceList__jLg4_"><li>On reducing software complexity: <!-- --> <a href="https://thevaluable.dev/cohesion-coupling-guide-examples/">Cohesion and Coupling in Software with Examples</a></li><li>On why DRY code is not always good: <!-- --> <a href="https://www.deconstructconf.com/2019/dan-abramov-the-wet-codebase">The wet codebase</a></li><li>Another article on the same topic: <!-- --> <a href="https://overreacted.io/goodbye-clean-code/">Goodbye, Clean Code</a></li><li>On how to write high quality tests: <!-- --> <a href="https://mtlynch.io/good-developers-bad-tests/">Why Good Developers Write Bad Unit Tests</a></li></ul><h2>Do not reinvent the wheel</h2><p>Instead of falling into the <!-- --> <a href="https://en.wikipedia.org/wiki/Not_invented_here#In_computing">&quot;NIH Syndrom&quot;</a> <!-- -->trap, we should rely on FOSS solutions for problems that have already been solved. This way we won&#x27;t have the maintenance burden of keeping the solutions alive or improving them while reaping the benefits of improvements.</p><p>Code should only be written for domain-specific problems that can&#x27;t be addressed by using public solutions and then composed with the available tools mentioned above. This way, the codebase stays as small as possible, and maintenance remains at a minimum.</p><h2>Simplicity is the key</h2><p>Simplicity is the key to maintainable, scalable, and usable software. This principle applies not only to code and architecture but also to user interfaces, documentation, and communication. Regarding importance, I follow the<!-- --> <a href="https://en.wikipedia.org/wiki/Worse_is_better#New_Jersey_style">&quot;New Jersey Style&quot;</a> <!-- -->model of software design, at least in parts — especially &quot;Simplicity is the most important consideration in a design.&quot; However, I believe that the interface should be as simple as possible, as the user interface must be as accessible as possible.</p><p>The perception of the software by the target audience can make the difference between success and losing to a competitor. Therefore, it&#x27;s necessary to provide an intuitive user interface so that users don&#x27;t have to think about how to accomplish what they want to do. They should be able to just do it.</p><h3>Simple software</h3><p>Simple software is easy to maintain because it is easy to understand how it works and where to find the necessary code. The following text can be found on<!-- --> <a href="https://suckless.org/philosophy/">suckless.org/philosophy</a> <!-- --> and has been slightly adjusted by me:</p><blockquote cite="https://suckless.org/philosophy/">We focus on simplicity, clarity and frugality. Our philosophy is about keeping things simple, minimal and usable. Unfortunately, the tendency for complex, error-prone and slow software seems to be prevalent in the present-day software industry. We intend to prove the opposite with our software.</blockquote><p>The user interface should be simple enough that it can be used intuitively by inexperienced users (e.g., the older demographic), while power users can navigate and interact efficiently and effortlessly.</p><p>Designing simple and elegant software is far more difficult than allowing ad-hoc or over-ambitious features to obscure the code over time. However, one has to pay this price to achieve reliability and maintainability. Furthermore, minimalism results in reasonable and attainable goals. I strive to maintain minimalism and clarity to drive development to completion.</p><h4>Features and rejecting feature requests</h4><p>Features should only be added when necessary. The following quote summarizes my perspective perfectly:</p><blockquote>we don&#x27;t want to blindly add features just because. We want to add them if we feel they are useful and pass the benefit versus cost calculation. A new feature doesn&#x27;t just mean writing some code and merging it; it also means testing, maintaining and supporting it and considering it whenever another new feature comes up. Also, quite often specific usecases can be realized with different solutions.<br/>(<a href="https://github.com/i3/i3/issues/2107#issuecomment-238251240">source</a>)</blockquote><h4>Software design</h4><p>Designing the code and its architecture follows the evolutionary design philosophy. It&#x27;s impossible to know what the code will look like eventually. Therefore, it makes sense to sit down with the team and discuss how to implement the next feature only. This will include how the code could potentially be refactored before any new code has been written. But that refactoring should only be on a small scale. Bigger refactors should happen on purpose at intervals instead of just when an obvious need becomes visible. This allows the developers to keep the codebase as simple as possible, as the goal of the refactor is to make the code simpler. This could be achieved by adding or removing(!) abstractions. I find that a good approach to this kind of refactoring is to reduce coupling and achieve a reasonable level of cohesion.<!-- --> <a href="Cohesion and Coupling in Software with Examples">Cohesion and Coupling in Software with Examples</a> <!-- --> <!-- -->is a very good article that not only explains the types of coupling and cohesion that exist but also how much cohesion should be strived for.</p></div></div></div><script src="/_next/static/chunks/webpack-f91e38af2b0d8753.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2\",{\"as\":\"font\",\"type\":\"font/woff2\"}]\n2:HL[\"/_next/static/css/d1b31cbb0886368a.css\",{\"as\":\"style\"}]\n0:\"$L3\"\n"])</script><script>self.__next_f.push([1,"4:HL[\"/_next/static/css/e4e54e349431bea1.css\",{\"as\":\"style\"}]\n"])</script><script>self.__next_f.push([1,"5:I{\"id\":7948,\"chunks\":[\"272:static/chunks/webpack-f91e38af2b0d8753.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"default\",\"async\":false}\n7:I{\"id\":6628,\"chunks\":[\"272:static/chunks/webpack-f91e38af2b0d8753.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"\",\"async\":false}\n8:I{\"id\":6685,\"chunks\":[\"685:static/chunks/685-a8c11ad368fada34.js\",\"185:static/chunks/app/layout-b2bd1b6cfa2d6bf6.js\"],\"na"])</script><script>self.__next_f.push([1,"me\":\"\",\"async\":false}\n9:I{\"id\":7767,\"chunks\":[\"272:static/chunks/webpack-f91e38af2b0d8753.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"default\",\"async\":false}\na:I{\"id\":7920,\"chunks\":[\"272:static/chunks/webpack-f91e38af2b0d8753.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"default\",\"async\":false}\n"])</script><script>self.__next_f.push([1,"3:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/d1b31cbb0886368a.css\",\"precedence\":\"next\"}]],[\"$\",\"$L5\",null,{\"buildId\":\"-m8BOcZza9jQ-ebgUJgHp\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/way-of-working\",\"initialTree\":[\"\",{\"children\":[\"way-of-working\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L6\"],\"globalErrorComponent\":\"$7\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"className\":\"__className_e66fe9\",\"children\":[\"$\",\"div\",null,{\"className\":\"layout_page__ZPT7X\",\"children\":[[\"$\",\"div\",null,{\"className\":\"layout_homeLink__CGEGG\",\"children\":[\"$\",\"$L8\",null,{\"href\":\"/\",\"children\":\"Home\"}]}],[\"$\",\"div\",null,{\"className\":\"layout_wrapper__zNuca\",\"children\":[\"$\",\"$L9\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"template\":[\"$\",\"$La\",null,{}],\"templateStyles\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L9\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"way-of-working\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"template\":[\"$\",\"$La\",null,{}],\"templateStyles\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$Lb\",[\"$\",\"div\",null,{\"className\":\"page_wayOfWorking__MTgpg\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"page_title__rsu00\",\"children\":\"Way of working\"}],[\"$\",\"p\",null,{\"className\":\"page_introText__HpEbC\",\"children\":\"On this page, I'll describe very briefly the ideal development situation I'd like to work in. This will cover code-related topics but also team work and organizing tasks.\"}],[\"$\",\"p\",null,{\"children\":\"Overall I think that Martin Fowler's blog covers a lot of ideas I align with, here are some examples:\"}],[\"$\",\"ul\",null,{\"className\":\"page_referenceList__jLg4_\",\"children\":[[\"$\",\"li\",null,{\"children\":[\"On evolutionary design: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://www.martinfowler.com/articles/designDead.html\",\"children\":\"Is Design Dead?\"}]]}],[\"$\",\"li\",null,{\"children\":[\"On why software quality matter: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://martinfowler.com/articles/is-quality-worth-cost.html\",\"children\":\"Is High Quality Software Worth the Cost?\"}]]}],[\"$\",\"li\",null,{\"children\":[\"On opportunistic refactoring: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://martinfowler.com/bliki/OpportunisticRefactoring.html\",\"children\":\"OpportunisticRefactoring\"}]]}],[\"$\",\"li\",null,{\"children\":[\"On why testing extensively matters: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://martinfowler.com/bliki/SelfTestingCode.html\",\"children\":\"SelfTestingCode\"}]]}]]}],[\"$\",\"p\",null,{\"children\":\"Here are some other links that I really like and describe my way of thinking/working, so I don't have to duplicate it here :)\"}],[\"$\",\"ul\",null,{\"className\":\"page_referenceList__jLg4_\",\"children\":[[\"$\",\"li\",null,{\"children\":[\"On reducing software complexity: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://thevaluable.dev/cohesion-coupling-guide-examples/\",\"children\":\"Cohesion and Coupling in Software with Examples\"}]]}],[\"$\",\"li\",null,{\"children\":[\"On why DRY code is not always good: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://www.deconstructconf.com/2019/dan-abramov-the-wet-codebase\",\"children\":\"The wet codebase\"}]]}],[\"$\",\"li\",null,{\"children\":[\"Another article on the same topic: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://overreacted.io/goodbye-clean-code/\",\"children\":\"Goodbye, Clean Code\"}]]}],[\"$\",\"li\",null,{\"children\":[\"On how to write high quality tests: \",\" \",[\"$\",\"a\",null,{\"href\":\"https://mtlynch.io/good-developers-bad-tests/\",\"children\":\"Why Good Developers Write Bad Unit Tests\"}]]}]]}],[\"$\",\"h2\",null,{\"children\":\"Do not reinvent the wheel\"}],[\"$\",\"p\",null,{\"children\":[\"Instead of falling into the \",\" \",[\"$\",\"a\",null,{\"href\":\"https://en.wikipedia.org/wiki/Not_invented_here#In_computing\",\"children\":\"\\\"NIH Syndrom\\\"\"}],\" \",\"trap, we should rely on FOSS solutions for problems that have already been solved. This way we won't have the maintenance burden of keeping the solutions alive or improving them while reaping the benefits of improvements.\"]}],[\"$\",\"p\",null,{\"children\":\"Code should only be written for domain-specific problems that can't be addressed by using public solutions and then composed with the available tools mentioned above. This way, the codebase stays as small as possible, and maintenance remains at a minimum.\"}],[\"$\",\"h2\",null,{\"children\":\"Simplicity is the key\"}],[\"$\",\"p\",null,{\"children\":[\"Simplicity is the key to maintainable, scalable, and usable software. This principle applies not only to code and architecture but also to user interfaces, documentation, and communication. Regarding importance, I follow the\",\" \",[\"$\",\"a\",null,{\"href\":\"https://en.wikipedia.org/wiki/Worse_is_better#New_Jersey_style\",\"children\":\"\\\"New Jersey Style\\\"\"}],\" \",\"model of software design, at least in parts — especially \\\"Simplicity is the most important consideration in a design.\\\" However, I believe that the interface should be as simple as possible, as the user interface must be as accessible as possible.\"]}],[\"$\",\"p\",null,{\"children\":\"The perception of the software by the target audience can make the difference between success and losing to a competitor. Therefore, it's necessary to provide an intuitive user interface so that users don't have to think about how to accomplish what they want to do. They should be able to just do it.\"}],[\"$\",\"h3\",null,{\"children\":\"Simple software\"}],[\"$\",\"p\",null,{\"children\":[\"Simple software is easy to maintain because it is easy to understand how it works and where to find the necessary code. The following text can be found on\",\" \",[\"$\",\"a\",null,{\"href\":\"https://suckless.org/philosophy/\",\"children\":\"suckless.org/philosophy\"}],\" \",\" and has been slightly adjusted by me:\"]}],[\"$\",\"blockquote\",null,{\"cite\":\"https://suckless.org/philosophy/\",\"children\":\"We focus on simplicity, clarity and frugality. Our philosophy is about keeping things simple, minimal and usable. Unfortunately, the tendency for complex, error-prone and slow software seems to be prevalent in the present-day software industry. We intend to prove the opposite with our software.\"}],[\"$\",\"p\",null,{\"children\":\"The user interface should be simple enough that it can be used intuitively by inexperienced users (e.g., the older demographic), while power users can navigate and interact efficiently and effortlessly.\"}],[\"$\",\"p\",null,{\"children\":\"Designing simple and elegant software is far more difficult than allowing ad-hoc or over-ambitious features to obscure the code over time. However, one has to pay this price to achieve reliability and maintainability. Furthermore, minimalism results in reasonable and attainable goals. I strive to maintain minimalism and clarity to drive development to completion.\"}],[\"$\",\"h4\",null,{\"children\":\"Features and rejecting feature requests\"}],[\"$\",\"p\",null,{\"children\":\"Features should only be added when necessary. The following quote summarizes my perspective perfectly:\"}],[\"$\",\"blockquote\",null,{\"children\":[\"we don't want to blindly add features just because. We want to add them if we feel they are useful and pass the benefit versus cost calculation. A new feature doesn't just mean writing some code and merging it; it also means testing, maintaining and supporting it and considering it whenever another new feature comes up. Also, quite often specific usecases can be realized with different solutions.\",[\"$\",\"br\",null,{}],\"(\",[\"$\",\"a\",null,{\"href\":\"https://github.com/i3/i3/issues/2107#issuecomment-238251240\",\"children\":\"source\"}],\")\"]}],[\"$\",\"h4\",null,{\"children\":\"Software design\"}],[\"$\",\"p\",null,{\"children\":[\"Designing the code and its architecture follows the evolutionary design philosophy. It's impossible to know what the code will look like eventually. Therefore, it makes sense to sit down with the team and discuss how to implement the next feature only. This will include how the code could potentially be refactored before any new code has been written. But that refactoring should only be on a small scale. Bigger refactors should happen on purpose at intervals instead of just when an obvious need becomes visible. This allows the developers to keep the codebase as simple as possible, as the goal of the refactor is to make the code simpler. This could be achieved by adding or removing(!) abstractions. I find that a good approach to this kind of refactoring is to reduce coupling and achieve a reasonable level of cohesion.\",\" \",[\"$\",\"a\",null,{\"href\":\"Cohesion and Coupling in Software with Examples\",\"children\":\"Cohesion and Coupling in Software with Examples\"}],\" \",\" \",\"is a very good article that not only explains the types of coupling and cohesion that exist but also how much cohesion should be strived for.\"]}]]}],null],\"segment\":\"__PAGE__\"},\"styles\":[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/e4e54e349431bea1.css\",\"precedence\":\"next\"}]]}],\"segment\":\"way-of-working\"},\"styles\":[]}]}]]}]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"6:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"1\",{\"children\":\"Mohammer5's Way of Working\"}],[\"$\",\"meta\",\"2\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"link\",\"3\",{\"rel\":\"icon\",\"href\":\"/favicon.ico\",\"type\":\"image/x-icon\",\"sizes\":\"16x16\"}],[\"$\",\"meta\",\"4\",{\"name\":\"next-size-adjust\"}]]\nb:null\n"])</script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="font" href="/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2" crossorigin="" type="font/woff2"/><link rel="stylesheet" href="/_next/static/css/363f20c577160e77.css" data-precedence="next"/><link rel="stylesheet" href="/_next/static/css/d3470fa69930d48d.css" data-precedence="next"/><link rel="preload" href="/_next/static/chunks/webpack-e833d07548c45217.js" as="script" fetchPriority="low"/><script src="/_next/static/chunks/fd9d1056-a99b58d3cc150217.js" async=""></script><script src="/_next/static/chunks/596-9d43875837bd0b65.js" async=""></script><script src="/_next/static/chunks/main-app-1529d3c4bb8876e5.js" async=""></script><title>Mohammer5&#x27;s Way of Working</title><link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="16x16"/><meta name="next-size-adjust"/><script src="/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js" noModule=""></script></head><body class="__className_e66fe9"><div class="layout_page__ZPT7X"><div class="layout_homeLink__CGEGG"><a href="/">Home</a></div><div class="layout_wrapper__zNuca"><div class="markdown_markdown___iZty"><h1>WIP: Way of working</h1>
+<p><strong>This page is still <u>work in progress</u>! Some sections and all chapters haven&#x27;t
+been completed yet. Having said that, I think this already paints a somewhat
+clear picture of how I like to work</strong></p>
+<p>On this page, I&#x27;ll describe very briefly the ideal development
+situation I&#x27;d like to work in. This will cover code-related topics
+but also team work and organizing tasks. I have two main focuses:
+Firstly I want to maximize business results, secondly I want to equally
+maximize employee satisfaction. In my opinion, it&#x27;s not just possible to
+achieve both, the latter is actually very good for the former! Happy employees
+work better. Happy employees are happy (this tautology is on purpose!)</p>
+<ul>
+<li><a href="#development">Development</a>
+<ul>
+<li>Do not reinvent the wheel</li>
+<li>Simplicity is the key</li>
+<li>Simple software</li>
+<li>Software design</li>
+</ul>
+</li>
+<li><a href="#management">Management</a>
+<ul>
+<li>Solution-oriented problem solving</li>
+<li>Decisions should be reached through inclusion, The decision-making process must be explicit</li>
+<li>Communication is the key</li>
+<li>Meetings</li>
+<li>Adressing bugs before features</li>
+<li>Features and rejecting feature requests</li>
+</ul>
+</li>
+<li><a href="#tldr">Tl;dr &amp; Link-list</a></li>
+</ul>
+<a name="development"></a>
+<h2>Development</h2>
+<h3>Do not reinvent the wheel</h3>
+<p>Instead of falling into the
+<a href="https://en.wikipedia.org/wiki/Not_invented_here#In_computing">&quot;NIH Syndrom&quot;</a>
+trap, we should rely on FOSS solutions for problems that
+have already been solved. This way we won&#x27;t have the maintenance burden of
+keeping the solutions alive or improving them while reaping the benefits of
+improvements.</p>
+<p>Code should only be written for domain-specific problems that can&#x27;t be
+addressed by using public solutions and then composed with the available tools
+mentioned above. This way, the codebase stays as small as possible, and
+maintenance remains at a minimum.</p>
+<h3>Simplicity is the key</h3>
+<p>Simplicity is the key to maintainable, scalable, and usable software. This
+principle applies not only to code and architecture but also to user
+interfaces, documentation, and communication. Regarding importance, I follow
+the <a href="https://en.wikipedia.org/wiki/Worse_is_better#New_Jersey_style">&quot;New Jersey
+Style&quot;</a> model
+of software design, at least in parts — especially &quot;Simplicity is the most
+important consideration in a design.&quot; However, I believe that the interface
+should be as simple as possible, as the user interface must be as accessible as
+possible.</p>
+<p>The perception of the software by the target audience can make the difference
+between success and losing to a competitor. Therefore, it&#x27;s necessary to
+provide an intuitive user interface so that users don&#x27;t have to think about how
+to accomplish what they want to do. They should be able to just do it.</p>
+<h3>Simple software</h3>
+<p>Simple software is easy to maintain because it is easy to understand how it
+works and where to find the necessary code. The following text can be found on
+<a href="suckless.org/philosophy">suckless.org/philosophy</a> and has been slightly
+adjusted by me:</p>
+<blockquote>
+<p>We focus on simplicity, clarity and frugality. Our philosophy is about
+keeping things simple, minimal and usable. Unfortunately, the tendency for
+complex, error-prone and slow software seems to be prevalent in the
+present-day software industry. We intend to prove the opposite with our
+software.<br/>
+<a href="https://suckless.org/philosophy/">source</a></p>
+</blockquote>
+<p>The user interface should be simple enough that it can be used intuitively by
+inexperienced users (e.g., the older demographic), while power users can
+navigate and interact efficiently and effortlessly.</p>
+<p>Designing simple and elegant software is far more difficult than allowing
+ad-hoc or over-ambitious features to obscure the code over time. However, one
+has to pay this price to achieve reliability and maintainability. Furthermore,
+minimalism results in reasonable and attainable goals. I strive to maintain
+minimalism and clarity to drive development to completion.</p>
+<h3>Software design</h3>
+<p>Designing the code and its architecture follows the evolutionary design
+philosophy. It&#x27;s impossible to know what the code will look like eventually.
+Therefore, it makes sense to sit down with the team and discuss how to
+implement the next feature only. This will include how the code could
+potentially be refactored before any new code has been written. But that
+refactoring should only be on a small scale. Bigger refactors should happen on
+purpose at intervals instead of just when an obvious need becomes visible. This
+allows the developers to keep the codebase as simple as possible, as the goal
+of the refactor is to make the code simpler. This could be achieved by adding
+or removing(!) abstractions. I find that a good approach to this kind of
+refactoring is to reduce coupling and achieve a reasonable level of cohesion.
+<a href="https://thevaluable.dev/cohesion-coupling-guide-examples/">Cohesion and Coupling in Software with
+Examples</a> is a very
+good article that not only explains the types of coupling and cohesion that
+exist but also how much cohesion should be strived for.</p>
+<a name="management"></a>
+<h2>Management</h2>
+<p>Managing software development is often thought of as a very straight forward
+process. Executes define the strategy, managers plan, UI/UX design, developers
+implement and, if exiting, QA tests.</p>
+<p>This simplified version of what software development could look like (and often
+it does look like that) neglects many aspects which ensures that realizing any
+potential is very limited. On the one hand this process excludes those people
+with detailed knowledge about the software from defining strategy or helping
+planing: The developers, the UI/UX team and the QA team. On the other hand this
+process outright ignores the human aspect of team dynamics. How do we make
+decisions? How do we ensure that everyone is (or at least can) heard without
+having to fear repercussions?</p>
+<h3>Solution-oriented problem solving</h3>
+<p>Many job application have a specific requirement: &quot;Solution-oriented approach&quot;.
+The issue with this term is that it is very vague. From what I&#x27;ve seen so far,
+most people seem to think that it means you should not think about problems too
+much and rather &quot;just&quot; find a solution that works. In practice this often leads
+to poor decisions with solve the problem only on the surface and, even worse,
+introduce new problems which are often not recognized as they&#x27;re quite hard to
+see.</p>
+<p>The way I see it is that focussing on solutions is often the wrong way. Of
+course focusing on the problem only doesn&#x27;t help either as then there won&#x27;t
+be any solution whatsoever. But the trick is to define the problem very
+clearly, then define equally clearly how we can know whether we solved the
+problem and - if possible - how well. This will serve as a basis for finding
+and triaging different solutions. It is very important though to try to find
+the potential downsides of every solution to be able to properly evaluate the
+cost/benefit ratio as best as possible.</p>
+<p>This kind of decision making process takes time, and in my opinion rightfully
+so. Immature decision will cost the business a lot more time and money than the
+extra time spent to find a proper solution.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Problem-oriented_development">&quot;Problem-oriented
+development&quot;</a>
+paradigm has some good ideas (I understand that the name is meant to represent
+a countermovement to the process I describe above, but I think the name is
+chosen equally poorly):</p>
+<blockquote>
+<ul>
+<li>Investigating the structure of organisational problems as addressed by
+Software Engineering;</li>
+<li>Providing formalisms for modelling and representing problems;</li>
+<li>Providing guidance and frameworks for problem analysis and decomposition;</li>
+<li>Defining techniques for formally justifying solutions (e.g. by associating
+problem components with solution components);</li>
+<li>Supporting knowledge reuse during problem analysis (e.g. through problem
+patterns).</li>
+</ul>
+</blockquote>
+<h3>Decisions should be reached through inclusion,<br/>The decision-making process must be explicit</h3>
+<p>When it comes to business decisions and strategy, those with the best knowledge
+are those at the bottom: the developers, the designers, the researchers, the QA
+team, etc. They work on the product, they work with the users and they see
+flaws and misdirection directly. A top-down hierarchy (which includes &quot;flat
+hierarchies&quot;) all suffer from the same problem:</p>
+<blockquote>
+<p>executives don&#x27;t set strategy. Not even the CEO sets strategy. Why? Because
+it&#x27;s an illusion to believe you can enforce a strategy. [...]
+command-and-control is not very efficient for knowledge workers, because of
+the fundamental problem that for any given situation, the people who know the
+most about it are the people at the bottom, not the people at the top.<br/>
+<a href="https://apenwarr.ca/log/?m=201909">source</a></p>
+</blockquote>
+<p>If the main objective is to make profit, it is in the interest of the founders,
+owners and shareholders to include everyone in the decision making process and
+it&#x27;s equally important to define the decision making process explicitly:</p>
+<blockquote>
+<p>[To] strive for a structureless group is as useful, and as
+deceptive, as to aim at an &quot;objective&quot; news story, &quot;value-free&quot; social science,
+or a &quot;free&quot; economy. A &quot;laissez faire&quot; group is about as realistic as a
+&quot;laissez faire&quot; society; the idea becomes a smokescreen for the strong or the
+lucky to establish unquestioned hegemony over others. […] For everyone to have
+the opportunity to be involved in a given group and to participate in its
+activities the structure must be explicit, not implicit. The rules of
+decision-making must be open and available to everyone, and this can happen
+only if they are formalized.<br/>
+<a href="https://www.jofreeman.com/joreen/tyranny.htm">source</a></p>
+</blockquote>
+<h3>Communication is the key</h3>
+<p>The <a href="https://agilemanifesto.org/">agile manifesto</a> has four values, of which
+the first one is:</p>
+<blockquote>
+<p>Individuals and interactions over processes and tools</p>
+</blockquote>
+<p>This already indicates how important communication is. One of the original
+authors of the manifesto even talked about it:</p>
+<blockquote>
+<p>When we talked about the Agile Manifesto and laid out the four value
+statements, with most of those value statements, we didn&#x27;t care very much
+about what order they came in. But we did have an opinion about the first
+one: which is &quot;Individuals and Interactions over Processes and Tools&quot;. To me
+that crystallized a very important part of what agile thinking is about.</p>
+</blockquote>
+<h3>Meetings</h3>
+<p>Meetings are expensive and - if not done properly - just a waste of time for
+most of the participants. It&#x27;s tricky to do them right and ideally everyone is
+educated about how meetings should be done. Keep them short. When discussions
+start, stop them, arrange a follow-up meeting, if possible right after the
+meeting. Takes notes and make them public. Only do meetings when necessary. The
+following quote summarizes it perfectly:</p>
+<blockquote>
+<p>The most efficient meeting is no meeting. Let&#x27;s start with what should be
+obvious by now: sometimes you don&#x27;t need a meeting at all. For example, status
+updates almost always are better delivered in some written medium (like email)
+that can be retained for future reference, and skimmed (or ignored) faster than
+people can speak. Alas, skipping meetings doesn&#x27;t solve every problem, or else
+remote work would be a lot easier for everyone.<br/>
+<!-- -->[...]<br/>
+<!-- -->Remember: every minute costs multiple person-minutes. Imagine a meeting where a
+manager is presenting to 9 people. That costs 1+9 person-minutes per minute. A
+single one-hour meeting costs you 10 hours of employee salaries! With modern
+tech employees, that adds up really, really fast. You need to spend it wisely.
+[...] As a meeting trends away from a presentation and toward group discussion,
+efficiency drops fast. Almost always, a discussion will be dominated by 2-3
+people, leaving the others to sit and get bored.<br/>
+<a href="https://apenwarr.ca/log/20201123">source</a></p>
+</blockquote>
+<h3>Adressing bugs before features</h3>
+<p>Getting rid of all bugs before features is a ridiculously difficult task. I&#x27;d
+wager to say that it&#x27;s even close to impossible for existing projects that
+have accumulated hundrets or thousands of bug tickets. That&#x27;s why it has to be
+done properly right from the start.</p>
+<p>A very promising approach is the
+<a href="https://lostgarden.home.blog/2008/05/20/improving-bug-triage-with-user-pain/">Bug Triage with User Pain</a>.
+This approach fits very well into the agile way of working as &quot;<em>it is about
+empowering people, not managing them</em>&quot;.</p>
+<h3>Features and rejecting feature requests</h3>
+<p>Features should only be added when necessary. The following quote summarizes my
+perspective perfectly:</p>
+<blockquote>
+<p>we don&#x27;t want to blindly add features just because. We want to add them if we
+feel they are useful and pass the benefit versus cost calculation. A new
+feature doesn&#x27;t just mean writing some code and merging it; it also means
+testing, maintaining and supporting it and considering it whenever another
+new feature comes up. Also, quite often specific usecases can be realized
+with different solutions.<br/>
+<a href="https://github.com/i3/i3/issues/2107#issuecomment-238251240">source</a></p>
+</blockquote>
+<a name="tldr"></a>
+<h2>Tl;dr &amp; Link-list</h2>
+<p>Here are some other articles that I really like and describe my way of
+thinking/working much better than I could replicate here. All links above can
+be found here, too.</p>
+<ul>
+<li><a href="https://agilemanifesto.org/">Agile manifesto</a></li>
+<li><a href="https://lostgarden.home.blog/2008/05/20/improving-bug-triage-with-user-pain/">Bug Triage with User Pain</a></li>
+<li><a href="https://thevaluable.dev/cohesion-coupling-guide-examples/">Cohesion and Coupling in Software with Examples</a></li>
+<li><a href="https://github.com/i3/i3/issues/2107#issuecomment-238251240">Feature request: maximize command</a></li>
+<li><a href="https://overreacted.io/goodbye-clean-code/">Goodbye, Clean Code</a></li>
+<li><a href="https://www.martinfowler.com/articles/designDead.html">Is Design Dead?</a></li>
+<li><a href="https://martinfowler.com/articles/is-quality-worth-cost.html">Is High Quality Software Worth the Cost?</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Not_invented_here#In_computing">NIH Syndrom</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Worse_is_better#New_Jersey_style">New Jersey Style</a></li>
+<li><a href="https://martinfowler.com/bliki/OpportunisticRefactoring.html">OpportunisticRefactoring</a></li>
+<li><a href="https://martinfowler.com/bliki/SelfTestingCode.html">SelfTestingCode</a></li>
+<li><a href="https://www.jofreeman.com/joreen/tyranny.htm">The tyranny of structurelessness</a></li>
+<li><a href="https://www.deconstructconf.com/2019/dan-abramov-the-wet-codebase">The wet codebase</a></li>
+<li><a href="https://apenwarr.ca/log/20201123">Thoughts you mightn&#x27;t&#x27;a thunk about remote meetings</a></li>
+<li><a href="https://apenwarr.ca/log/?m=201909">What do executives do, anyway?</a></li>
+<li><a href="https://mtlynch.io/good-developers-bad-tests/">Why Good Developers Write Bad Unit Tests</a></li>
+</ul></div></div></div><script src="/_next/static/chunks/webpack-e833d07548c45217.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2\",{\"as\":\"font\",\"type\":\"font/woff2\"}]\n2:HL[\"/_next/static/css/363f20c577160e77.css\",{\"as\":\"style\"}]\n0:\"$L3\"\n"])</script><script>self.__next_f.push([1,"4:HL[\"/_next/static/css/d3470fa69930d48d.css\",{\"as\":\"style\"}]\n"])</script><script>self.__next_f.push([1,"5:I{\"id\":7948,\"chunks\":[\"272:static/chunks/webpack-e833d07548c45217.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"default\",\"async\":false}\n7:I{\"id\":6628,\"chunks\":[\"272:static/chunks/webpack-e833d07548c45217.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"\",\"async\":false}\n8:I{\"id\":6685,\"chunks\":[\"685:static/chunks/685-a8c11ad368fada34.js\",\"185:static/chunks/app/layout-d42a15ab1254976a.js\"],\"na"])</script><script>self.__next_f.push([1,"me\":\"\",\"async\":false}\n9:I{\"id\":7767,\"chunks\":[\"272:static/chunks/webpack-e833d07548c45217.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"default\",\"async\":false}\na:I{\"id\":7920,\"chunks\":[\"272:static/chunks/webpack-e833d07548c45217.js\",\"971:static/chunks/fd9d1056-a99b58d3cc150217.js\",\"596:static/chunks/596-9d43875837bd0b65.js\"],\"name\":\"default\",\"async\":false}\nc:I{\"id\":4827,\"chunks\":[\"154:static/chunks/app/way-of-working/page-564d6df8fefe6ad5.js\"],\"name"])</script><script>self.__next_f.push([1,"\":\"Contents\",\"async\":false}\n"])</script><script>self.__next_f.push([1,"3:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/363f20c577160e77.css\",\"precedence\":\"next\"}]],[\"$\",\"$L5\",null,{\"buildId\":\"WeCoqVMraKEjyqg_O177o\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/way-of-working\",\"initialTree\":[\"\",{\"children\":[\"way-of-working\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L6\"],\"globalErrorComponent\":\"$7\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"className\":\"__className_e66fe9\",\"children\":[\"$\",\"div\",null,{\"className\":\"layout_page__ZPT7X\",\"children\":[[\"$\",\"div\",null,{\"className\":\"layout_homeLink__CGEGG\",\"children\":[\"$\",\"$L8\",null,{\"href\":\"/\",\"children\":\"Home\"}]}],[\"$\",\"div\",null,{\"className\":\"layout_wrapper__zNuca\",\"children\":[\"$\",\"$L9\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"template\":[\"$\",\"$La\",null,{}],\"templateStyles\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L9\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"way-of-working\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"template\":[\"$\",\"$La\",null,{}],\"templateStyles\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$Lb\",[\"$\",\"$Lc\",null,{}],null],\"segment\":\"__PAGE__\"},\"styles\":[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/d3470fa69930d48d.css\",\"precedence\":\"next\"}]]}],\"segment\":\"way-of-working\"},\"styles\":[]}]}]]}]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"6:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"1\",{\"children\":\"Mohammer5's Way of Working\"}],[\"$\",\"meta\",\"2\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"link\",\"3\",{\"rel\":\"icon\",\"href\":\"/favicon.ico\",\"type\":\"image/x-icon\",\"sizes\":\"16x16\"}],[\"$\",\"meta\",\"4\",{\"name\":\"next-size-adjust\"}]]\nb:null\n"])</script></body></html>

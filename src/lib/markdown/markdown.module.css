@@ -1,0 +1,94 @@
+.markdown {
+  font-size: 16px;
+}
+
+.markdown :global(h1) {
+  font-size: 32px;
+  border-bottom: 1px solid black;
+  margin: 0 0 16px;
+  padding-bottom: 0.3em;
+}
+
+.markdown :global(h2) {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid black;
+  margin: 24px 0 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown :global(h3) {
+  font-size: 1.25em;
+  margin: 24px 0 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown :global(h4) {
+  font-size: 1em;
+  margin: 24px 0 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown :global(h5) {
+  font-size: .875em;
+  margin-top: 24px;
+  margin-bottom: 0px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown :global(p) {
+  font-size: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  margin: 0 0 16px;
+}
+
+.markdown :global(ul) {
+  list-style-type: circle;
+  margin: 0 0 16px;
+  padding-left: 2em;
+}
+
+.markdown :global(ul) li {
+  margin-bottom: 6px;
+}
+
+.markdown :global(ul) :global(ul) {
+  margin-bottom: 0;
+}
+
+.markdown :global(ul) :global(ul) :global(li):first-child {
+  padding-top: 6px;
+}
+
+.markdown :global(a) {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  color: rgb(9, 105, 218);
+  cursor: pointer;
+}
+
+.markdown :global(blockquote) {
+  position: relative;
+  padding: 0.5em 0 0.5em 1em;
+  margin: 0 0 16px;
+}
+
+.markdown :global(blockquote) *:last-child {
+  margin-bottom: 0;
+}
+
+.markdown :global(blockquote):before {
+  content: '';
+  height: 100%;
+  width: 4px;
+  background: grey;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
