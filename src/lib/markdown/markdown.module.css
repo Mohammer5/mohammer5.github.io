@@ -48,20 +48,27 @@
   margin: 0 0 16px;
 }
 
+.markdown :global(ol),
 .markdown :global(ul) {
-  list-style-type: circle;
   margin: 0 0 16px;
   padding-left: 2em;
 }
 
+.markdown :global(ol) li,
 .markdown :global(ul) li {
   margin-bottom: 6px;
 }
 
+.markdown :global(ol) :global(ol),
+.markdown :global(ol) :global(ul),
+.markdown :global(ul) :global(ol),
 .markdown :global(ul) :global(ul) {
   margin-bottom: 0;
 }
 
+.markdown :global(ol) :global(ol) :global(li):first-child,
+.markdown :global(ol) :global(ul) :global(li):first-child,
+.markdown :global(ul) :global(ol) :global(li):first-child,
 .markdown :global(ul) :global(ul) :global(li):first-child {
   padding-top: 6px;
 }

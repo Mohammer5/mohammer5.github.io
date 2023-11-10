@@ -29,6 +29,86 @@ work better. Happy employees are happy (this tautology is on purpose!)
 <a name="development"></a>
 ## Development
 
+The primary goal of writing software is to make it serve a purpose. In most
+cases that's quite straight forward: Generate profit. In other cases, it's 
+more about solving a particular problem (e.g. what non-profit organizations
+do).
+
+In any case, in order to achieve the goal, writing high-quality software is not
+really necessary. But once the initial profits come in and the software needs
+to be extended (e.g. to stay ahead of competitors) or adjusted (e.g. to changed
+requirements), having high quality software is a significant competitive
+advantage. This brings up the most important question: What does high-quality
+software mean; and: How do you achieve it?
+
+The answer to the first question is surprisingly straight forward: Software
+needs to be simple, it's the key to maintainable, scalable, and usable
+software. And it's quite easy to explain: It's easy to change simple
+software, and likewise it's difficult to change complicated software. Despite
+the simplicity of the answer, it's easier said than done!
+
+This actually applies not only to code and architecture but also to user
+interfaces, documentation, and communication. Regarding importance, I follow
+the ["New Jersey
+Style"](https://en.wikipedia.org/wiki/Worse_is_better#New_Jersey_style) model
+of software design, at least in parts — especially "Simplicity is the most
+important consideration in a [software] design." However, I believe that the
+interface should be as simple as possible, as the user interface must be as
+accessible as possible as the perception of the software by the target audience
+can make the difference between winning against or losing to a competitor.
+Therefore, it's necessary to provide an intuitive user interface so that users
+don't have to think about how to accomplish what they want to do. They should
+be able to just do it.
+
+This answer brings up a follow-up question: What criteria has to be fulfilled
+so that software counts as simple?
+
+### The foundaton of simple code: Coupling and cohesion
+
+This is where we enter subjective territory. From what I've experienced so far,
+the most important concepts are coupling and cohesion. The reason why this
+topic is so subjective is because although we want to avoid coupling when possible,
+we also don't want every piece of the software to be an abstract cohesive unit
+that can be used in any context. This would unavoidably introduce complexity
+again. It's required to find a good balance between coupling and cohesion.
+
+To achieve this, the process should start way before writing any code.
+According to Rich Hickey, the inventor of the clojure language, the biggest
+problems in programming are: 1. domain complexity and 2. misconception.
+
+By defining the problem domain thoroughly, which takes time and a lot of
+reflecting. Ideally everyone is included in this process to avoid any
+misconception right from th start. This process should result in some domain
+vocabulary, which describe different well-defined aspects that are part of the
+programm. These can serve as a basis for which cohesive modules might be needed.
+Or in the words of Matthieu Cneude:
+
+> 1. Building cohesive modules is the priority. [...] Cohesion should be about
+>    problem domains, not about technical concerns.
+> 2. If I can’t be as cohesive as I want to, I ask myself why. If no good
+>    reasons can be found, I try to aim for higher cohesion.
+> 3. I look at the connections between the different modules while building
+>    them if I can, or afterward. I ask myself: are there good reasons to couple
+>    these modules? How can I reduce the coupling?  
+>
+> [...]  
+>
+> * Creating cohesive modules is the best way to avoid strong coupling. Said
+>   differently: loosely coupled modules are often quite cohesive.
+> * Imprecise, or high level cohesion should be avoided. Instead, we should aim
+>   to have modules which are dedicated to solve a well-defined problem domain.
+> [source](https://thevaluable.dev/cohesion-coupling-guide-examples/)
+
+### Refactoring
+
+This sound great, but what about when software has to be modified, like when we
+add new features? This is where refactoring comes into play. Normally
+refactoring is being thought of as a tool to remove cruft once it's gotten too
+much. I'd argue that refactoring is a tool that should be utilized before we
+add new features.
+
+
+
 ### Do not reinvent the wheel
 
 Instead of falling into the
@@ -42,23 +122,6 @@ Code should only be written for domain-specific problems that can't be
 addressed by using public solutions and then composed with the available tools
 mentioned above. This way, the codebase stays as small as possible, and
 maintenance remains at a minimum.
-
-### Simplicity is the key
-
-Simplicity is the key to maintainable, scalable, and usable software. This
-principle applies not only to code and architecture but also to user
-interfaces, documentation, and communication. Regarding importance, I follow
-the ["New Jersey
-Style"](https://en.wikipedia.org/wiki/Worse_is_better#New_Jersey_style) model
-of software design, at least in parts — especially "Simplicity is the most
-important consideration in a design." However, I believe that the interface
-should be as simple as possible, as the user interface must be as accessible as
-possible.
-
-The perception of the software by the target audience can make the difference
-between success and losing to a competitor. Therefore, it's necessary to
-provide an intuitive user interface so that users don't have to think about how
-to accomplish what they want to do. They should be able to just do it.
 
 ### Simple software
 
