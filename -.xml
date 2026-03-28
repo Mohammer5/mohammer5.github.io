@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf2xml SYSTEM "pdf2xml.dtd">
+
+<pdf2xml producer="poppler" version="25.10.0">
+<page number="1" position="absolute" top="0" left="0" height="1188" width="918">
+	<fontspec id="0" size="30" family="BAAAAA+Carlito" color="#1f4e79"/>
+	<fontspec id="1" size="17" family="CAAAAA+Carlito" color="#666666"/>
+	<fontspec id="2" size="16" family="DAAAAA+NotoSerif" color="#444444"/>
+	<fontspec id="3" size="21" family="BAAAAA+Carlito" color="#1f4e79"/>
+	<fontspec id="4" size="17" family="EAAAAA+NotoSerif" color="#000000"/>
+	<fontspec id="5" size="17" family="EAAAAA+NotoSerif" color="#0563c1"/>
+	<fontspec id="6" size="18" family="BAAAAA+Carlito" color="#2f5597"/>
+<text top="81" left="97" width="715" height="37" font="0"><b>What are the characteristics of a maintainable (agentic) </b></text>
+<text top="118" left="97" width="134" height="37" font="0"><b>codebase?</b></text>
+<text top="184" left="97" width="609" height="20" font="1"><i>Revised draft with source-backed links, brief quotations, and added arguments</i></text>
+<text top="217" left="277" width="375" height="21" font="2"><i>“Everything in software architecture is a trade-off.”</i></text>
+<text top="261" left="97" width="109" height="26" font="3"><b>Introduction</b></text>
+<text top="300" left="97" width="676" height="22" font="4">With AI writing much larger volumes of code much faster, defects can now propagate </text>
+<text top="326" left="97" width="705" height="22" font="4">through a codebase at a pace that used to require an entire team. The core problem is not </text>
+<text top="351" left="97" width="695" height="22" font="4">that coding agents are incapable; it is that they do not hold the whole system in working </text>
+<text top="377" left="97" width="692" height="22" font="4">memory at once, so they need legible structure, reliable constraints, and feedback loops </text>
+<text top="403" left="97" width="296" height="22" font="4">that let them verify their own work.  [</text>
+<text top="403" left="394" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="403" left="403" width="16" height="22" font="4">] <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">[</a></text>
+<text top="403" left="419" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">7</a></text>
+<text top="403" left="429" width="16" height="22" font="4">] [</text>
+<text top="403" left="445" width="18" height="22" font="5"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">16</a></text>
+<text top="403" left="463" width="16" height="22" font="4">] <a href="https://arxiv.org/html/2603.00601v4">[</a></text>
+<text top="403" left="479" width="18" height="22" font="5"><a href="https://arxiv.org/html/2603.00601v4">20</a></text>
+<text top="403" left="498" width="6" height="22" font="4">]</text>
+<text top="438" left="97" width="714" height="22" font="4">That shifts the engineering problem. Instead of asking only whether humans can maintain </text>
+<text top="464" left="97" width="712" height="22" font="4">the system, we also have to ask whether an unfamiliar agent can explore it, form a correct </text>
+<text top="490" left="97" width="719" height="22" font="4">local model, make a narrow change, and validate that change without disturbing unrelated </text>
+<text top="516" left="97" width="707" height="22" font="4">parts of the application. OpenAI describes this as increasing “application legibility,” while </text>
+<text top="542" left="97" width="702" height="22" font="4">Anthropic emphasizes progressive disclosure: the agent should discover relevant context </text>
+<text top="567" left="97" width="555" height="22" font="4">incrementally rather than drown in a giant undifferentiated prompt.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="567" left="653" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="567" left="662" width="16" height="22" font="4"><a href="https://openai.com/index/harness-engineering/">]</a> [</text>
+<text top="567" left="678" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">7</a></text>
+<text top="567" left="687" width="6" height="22" font="4">]</text>
+<text top="602" left="130" width="500" height="21" font="2"><i>“Give Codex a map, not a 1,000-page instruction manual.” — OpenAI</i></text>
+<text top="635" left="97" width="714" height="22" font="4">The approaches below are not the only way to achieve a maintainable codebase. The point </text>
+<text top="661" left="97" width="697" height="22" font="4">is to compare design choices by the way they affect a few underlying characteristics that </text>
+<text top="687" left="97" width="283" height="22" font="4">matter for both humans and agents.</text>
+<text top="733" left="97" width="232" height="26" font="3"><b>Characteristics that matter</b></text>
+<text top="772" left="97" width="699" height="22" font="4">There is no architecture without trade-offs, and those trade-offs are not purely technical. </text>
+<text top="798" left="97" width="701" height="22" font="4">Different teams will tolerate different levels of duplication, indirection, centralization, or </text>
+<text top="824" left="97" width="692" height="22" font="4">coordination overhead. The useful question is not “what style is right?” but “how does a </text>
+<text top="850" left="97" width="453" height="22" font="4">given style improve or degrade the following properties?”</text>
+<text top="890" left="97" width="57" height="22" font="6"><b>Locality</b></text>
+<text top="922" left="97" width="695" height="22" font="4">Locality describes how many places need to be touched to complete a concrete task. In a </text>
+<text top="948" left="97" width="683" height="22" font="4">healthy codebase, most changes stay narrow and do not require edits across unrelated </text>
+<text top="973" left="97" width="692" height="22" font="4">modules. Parnas’s classic formulation is still the right mental model: modules should be </text>
+<text top="999" left="97" width="725" height="22" font="4">organized around decisions likely to change, and those decisions should be hidden from the </text>
+<text top="1025" left="97" width="156" height="22" font="4">rest of the system.  [</text>
+<text top="1025" left="254" width="9" height="22" font="5"><a href="https://prl.khoury.northeastern.edu/img/p-tr-1971.pdf">1</a></text>
+<text top="1025" left="263" width="6" height="22" font="4"><a href="https://prl.khoury.northeastern.edu/img/p-tr-1971.pdf">]</a></text>
+<text top="1060" left="130" width="595" height="21" font="2"><i>“Each module is then designed to hide such a decision from the others.” — Parnas</i></text>
+</page>
+<page number="2" position="absolute" top="0" left="0" height="1188" width="918">
+<text top="81" left="97" width="681" height="22" font="4">That matters even more for agentic engineering. If a feature is scattered across shared </text>
+<text top="107" left="97" width="719" height="22" font="4">helpers, orchestration layers, utility packages, and cross-cutting side effects, the agent must </text>
+<text top="133" left="97" width="706" height="22" font="4">keep more of the system in context and is more likely to miss one dependency or “fix” the </text>
+<text top="159" left="97" width="701" height="22" font="4">wrong abstraction. By contrast, when code is aligned with cohesive business capabilities, </text>
+<text top="185" left="97" width="585" height="22" font="4">many single-service or single-slice changes can remain local to that area.  [</text>
+<text top="185" left="682" width="9" height="22" font="5"><a href="https://martinfowler.com/articles/microservices.html">4</a></text>
+<text top="185" left="692" width="16" height="22" font="4">] <a href="https://microservices.io/patterns/decomposition/service-per-team.html">[</a></text>
+<text top="185" left="708" width="9" height="22" font="5"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">5</a></text>
+<text top="185" left="717" width="16" height="22" font="4"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">]</a> [</text>
+<text top="185" left="733" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="185" left="742" width="6" height="22" font="4">]</text>
+<text top="220" left="97" width="660" height="22" font="4">A practical consequence is that locality is not just about folder layout. It depends on </text>
+<text top="246" left="97" width="724" height="22" font="4">whether the ownership boundary, the semantic boundary, and the build-and-test boundary </text>
+<text top="271" left="97" width="718" height="22" font="4">line up well enough that the smallest sensible unit of work is also the smallest sensible unit </text>
+<text top="297" left="97" width="95" height="22" font="4">of change.  <a href="https://martinfowler.com/bliki/BoundedContext.html">[</a></text>
+<text top="297" left="192" width="9" height="22" font="5"><a href="https://martinfowler.com/bliki/BoundedContext.html">3</a></text>
+<text top="297" left="201" width="16" height="22" font="4">] <a href="https://microservices.io/patterns/decomposition/service-per-team.html">[</a></text>
+<text top="297" left="217" width="9" height="22" font="5"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">5</a></text>
+<text top="297" left="227" width="6" height="22" font="4">]</text>
+<text top="338" left="97" width="87" height="22" font="6"><b>Blast radius</b></text>
+<text top="369" left="97" width="728" height="22" font="4">Blast radius is the size of the unintended side effects of a change. A small blast radius means </text>
+<text top="395" left="97" width="720" height="22" font="4">a change remains local; a large one makes refactorings and fast iteration much riskier than </text>
+<text top="421" left="97" width="706" height="22" font="4">they should be. Protected Variation is a useful lens here: likely points of change should sit </text>
+<text top="447" left="97" width="707" height="22" font="4">behind stable interfaces so that clients are not forced to move with every implementation </text>
+<text top="473" left="97" width="84" height="22" font="4">decision.  <a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">[</a></text>
+<text top="473" left="181" width="9" height="22" font="5"><a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">2</a></text>
+<text top="473" left="190" width="6" height="22" font="4">]</text>
+<text top="508" left="130" width="620" height="21" font="2"><i>“Identify points of predicted variation and create a stable interface around them.” — </i></text>
+<text top="531" left="130" width="59" height="21" font="2"><i>Larman</i></text>
+<text top="564" left="97" width="691" height="22" font="4">For agents, blast radius is partly an architectural issue and partly a workflow issue. The </text>
+<text top="590" left="97" width="714" height="22" font="4">architecture determines how far a change can leak; the harness determines how much the </text>
+<text top="616" left="97" width="622" height="22" font="4">agent is allowed to touch before it proves safety. OpenAI’s agent-first repo uses </text>
+<text top="641" left="97" width="700" height="22" font="4">mechanically enforced dependency rules, while recent agent-harness work recommends </text>
+<text top="667" left="97" width="670" height="22" font="4">filtered tools, isolated worktrees, and explicit progress checkpoints so the system can </text>
+<text top="693" left="97" width="419" height="22" font="4">recover from bad turns instead of amplifying them.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="693" left="516" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="693" left="526" width="16" height="22" font="4">] <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">[</a></text>
+<text top="693" left="542" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">8</a></text>
+<text top="693" left="551" width="16" height="22" font="4"><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">]</a> [</text>
+<text top="693" left="567" width="18" height="22" font="5"><a href="https://arxiv.org/html/2603.05344v2">19</a></text>
+<text top="693" left="585" width="6" height="22" font="4">]</text>
+<text top="728" left="97" width="705" height="22" font="4">This is also why migration patterns such as branch by abstraction or legacy displacement </text>
+<text top="754" left="97" width="651" height="22" font="4">matter in an agentic setting: they create seams that allow large changes to proceed </text>
+<text top="780" left="97" width="439" height="22" font="4">gradually instead of forcing a broad, one-shot rewrite.  [</text>
+<text top="780" left="537" width="18" height="22" font="5"><a href="https://martinfowler.com/bliki/BranchByAbstraction.html">14</a></text>
+<text top="780" left="555" width="16" height="22" font="4">] <a href="https://martinfowler.com/articles/patterns-legacy-displacement/">[</a></text>
+<text top="780" left="571" width="18" height="22" font="5"><a href="https://martinfowler.com/articles/patterns-legacy-displacement/">15</a></text>
+<text top="780" left="590" width="6" height="22" font="4"><a href="https://martinfowler.com/articles/patterns-legacy-displacement/">]</a></text>
+<text top="820" left="97" width="140" height="22" font="6"><b>Boundary integrity</b></text>
+<text top="852" left="97" width="701" height="22" font="4">Boundary integrity is about how clear the borders are between modules, components, or </text>
+<text top="878" left="97" width="717" height="22" font="4">services. Good boundaries rely on explicit interfaces and clearly separated responsibilities, </text>
+<text top="904" left="97" width="667" height="22" font="4">while heavy coupling usually signals structural weakness. Fowler’s bounded-context </text>
+<text top="930" left="97" width="718" height="22" font="4">framing is especially useful here: large systems rarely support one perfectly unified model, </text>
+<text top="955" left="97" width="727" height="22" font="4">so the healthier move is to define local models and the translations between them explicitly. </text>
+<text top="981" left="97" width="6" height="22" font="4"><a href="https://martinfowler.com/bliki/BoundedContext.html">[</a></text>
+<text top="981" left="103" width="9" height="22" font="5"><a href="https://martinfowler.com/bliki/BoundedContext.html">3</a></text>
+<text top="981" left="112" width="6" height="22" font="4">]</text>
+<text top="1016" left="130" width="413" height="21" font="2"><i>“Strict boundaries and predictable structure.” — OpenAI</i></text>
+<text top="1049" left="97" width="694" height="22" font="4">That principle becomes more important with agents because agents reason from partial </text>
+<text top="1075" left="97" width="728" height="22" font="4">observations. If one module reaches directly into another team’s tables, state, or side effects, </text>
+</page>
+<page number="3" position="absolute" top="0" left="0" height="1188" width="918">
+<text top="81" left="97" width="704" height="22" font="4">the agent may infer the wrong contract from local evidence. Mechanically enforced layer </text>
+<text top="107" left="97" width="716" height="22" font="4">rules, explicit provider interfaces, and dependency-direction checks reduce that ambiguity </text>
+<text top="133" left="97" width="530" height="22" font="4">and make the architecture legible in a way prompts alone cannot.  [</text>
+<text top="133" left="628" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="133" left="637" width="16" height="22" font="4">] <a href="https://arxiv.org/html/2603.00601v4">[</a></text>
+<text top="133" left="653" width="18" height="22" font="5"><a href="https://arxiv.org/html/2603.00601v4">20</a></text>
+<text top="133" left="672" width="6" height="22" font="4"><a href="https://arxiv.org/html/2603.00601v4">]</a></text>
+<text top="168" left="97" width="676" height="22" font="4">Boundary integrity also improves failure handling. When responsibilities are explicit, </text>
+<text top="194" left="97" width="677" height="22" font="4">verification can target the contract at the boundary rather than revalidating an entire </text>
+<text top="220" left="97" width="350" height="22" font="4">downstream chain of accidental couplings.  [</text>
+<text top="220" left="448" width="9" height="22" font="5"><a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">2</a></text>
+<text top="220" left="457" width="16" height="22" font="4">] <a href="https://martinfowler.com/articles/microservices.html">[</a></text>
+<text top="220" left="473" width="9" height="22" font="5"><a href="https://martinfowler.com/articles/microservices.html">4</a></text>
+<text top="220" left="482" width="6" height="22" font="4">]</text>
+<text top="260" left="97" width="89" height="22" font="6"><b>Navigability</b></text>
+<text top="292" left="97" width="706" height="22" font="4">Navigability is the speed with which a new person can orient themselves in the codebase. </text>
+<text top="318" left="97" width="714" height="22" font="4">This is especially important for AI agents, because they can only inspect a small part of the </text>
+<text top="344" left="97" width="710" height="22" font="4">system at a time. Anthropic describes the ideal as progressive disclosure: the agent should </text>
+<text top="369" left="97" width="724" height="22" font="4">be able to retrieve just enough context for the next decision, then refine its mental model as </text>
+<text top="395" left="97" width="191" height="22" font="4">exploration continues.  <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">[</a></text>
+<text top="395" left="288" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">7</a></text>
+<text top="395" left="298" width="6" height="22" font="4"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">]</a></text>
+<text top="430" left="130" width="482" height="21" font="2"><i>“Agents can assemble understanding layer by layer.” — Anthropic</i></text>
+<text top="463" left="97" width="710" height="22" font="4">That makes searchability and repository-local knowledge first-class engineering concerns. </text>
+<text top="489" left="97" width="661" height="22" font="4">OpenAI argues for treating a short AGENTS.md as a table of contents rather than an </text>
+<text top="514" left="97" width="641" height="22" font="4">encyclopedia, while Google’s engineering guidance stresses both code search and </text>
+<text top="540" left="97" width="666" height="22" font="4">documentation designed to help unfamiliar contributors get something real running </text>
+<text top="566" left="97" width="77" height="22" font="4">quickly.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="566" left="174" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="566" left="183" width="16" height="22" font="4">] <a href="https://abseil.io/resources/swe-book/html/ch10.html">[</a></text>
+<text top="566" left="199" width="9" height="22" font="5"><a href="https://abseil.io/resources/swe-book/html/ch10.html">9</a></text>
+<text top="566" left="209" width="16" height="22" font="4">] <a href="https://abseil.io/resources/swe-book/html/ch17.html">[</a></text>
+<text top="566" left="225" width="18" height="22" font="5"><a href="https://abseil.io/resources/swe-book/html/ch17.html">11</a></text>
+<text top="566" left="243" width="6" height="22" font="4">]</text>
+<text top="601" left="97" width="721" height="22" font="4">Recent work on code agents also suggests that architecture understanding itself is an active-</text>
+<text top="627" left="97" width="687" height="22" font="4">exploration problem. Agents build beliefs from partial observations, revise them as the </text>
+<text top="653" left="97" width="676" height="22" font="4">environment changes, and then exploit those beliefs to perform downstream tasks. In </text>
+<text top="679" left="97" width="698" height="22" font="4">practice, that means good navigability is less about clever naming alone and more about </text>
+<text top="705" left="97" width="717" height="22" font="4">giving the repo enough maps, conventions, and discoverable entry points that those beliefs </text>
+<text top="730" left="97" width="262" height="22" font="4">converge quickly and correctly.  <a href="https://cognition.ai/blog/how-cognition-uses-devin-to-build-devin">[</a></text>
+<text top="730" left="359" width="18" height="22" font="5"><a href="https://cognition.ai/blog/how-cognition-uses-devin-to-build-devin">18</a></text>
+<text top="730" left="378" width="16" height="22" font="4"><a href="https://cognition.ai/blog/how-cognition-uses-devin-to-build-devin">]</a> [</text>
+<text top="730" left="394" width="18" height="22" font="5"><a href="https://arxiv.org/html/2603.00601v4">20</a></text>
+<text top="730" left="412" width="6" height="22" font="4">]</text>
+<text top="771" left="97" width="140" height="22" font="6"><b>Rebuild/test scope</b></text>
+<text top="803" left="97" width="696" height="22" font="4">Rebuild and test scope determine how narrowly a change can be verified. The better the </text>
+<text top="828" left="97" width="686" height="22" font="4">structure, the more often only the affected parts need to be built or tested, which keeps </text>
+<text top="854" left="97" width="717" height="22" font="4">feedback fast and iteration practical. Google’s testing guidance is blunt: larger system-scale </text>
+<text top="880" left="97" width="615" height="22" font="4">tests were often slower, less reliable, and harder to debug than smaller tests.  [</text>
+<text top="880" left="712" width="18" height="22" font="5"><a href="https://abseil.io/resources/swe-book/html/ch11.html">10</a></text>
+<text top="880" left="731" width="6" height="22" font="4"><a href="https://abseil.io/resources/swe-book/html/ch11.html">]</a></text>
+<text top="915" left="130" width="596" height="21" font="2"><i>“Slower, less reliable, and more difficult to debug than smaller tests.” — Software </i></text>
+<text top="939" left="130" width="162" height="21" font="2"><i>Engineering at Google</i></text>
+<text top="971" left="97" width="669" height="22" font="4">For agentic engineering, narrow verification is not a convenience; it is the difference </text>
+<text top="997" left="97" width="654" height="22" font="4">between an agent being able to self-correct within its loop and needing a human to </text>
+<text top="1023" left="97" width="696" height="22" font="4">arbitrate every change. Fowler’s recommendation to shift validation left applies directly </text>
+<text top="1049" left="97" width="598" height="22" font="4">here: agents produce better code when they can gauge quality themselves.  [</text>
+<text top="1049" left="695" width="18" height="22" font="5"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">16</a></text>
+<text top="1049" left="714" width="16" height="22" font="4"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">]</a> [</text>
+<text top="1049" left="730" width="18" height="22" font="5"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">17</a></text>
+<text top="1049" left="748" width="6" height="22" font="4">]</text>
+</page>
+<page number="4" position="absolute" top="0" left="0" height="1188" width="918">
+<text top="81" left="97" width="680" height="22" font="4">That requires both architectural seams and tooling seams. Hermetic builds make local </text>
+<text top="107" left="97" width="700" height="22" font="4">validation trustworthy by isolating the build from the host machine; test-impact analysis </text>
+<text top="133" left="97" width="692" height="22" font="4">narrows execution to the subset of tests relevant to the change; and evaluation loops let </text>
+<text top="159" left="97" width="717" height="22" font="4">teams check outputs against unit tests, latency targets, or style rules without broad manual </text>
+<text top="185" left="97" width="73" height="22" font="4">review.  <a href="https://bazel.build/basics/hermeticity">[</a></text>
+<text top="185" left="170" width="18" height="22" font="5"><a href="https://bazel.build/basics/hermeticity">12</a></text>
+<text top="185" left="189" width="16" height="22" font="4"><a href="https://bazel.build/basics/hermeticity">]</a> [</text>
+<text top="185" left="205" width="18" height="22" font="5"><a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/test/test-impact-analysis?view=azure-devops">13</a></text>
+<text top="185" left="223" width="16" height="22" font="4">] <a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">[</a></text>
+<text top="185" left="239" width="18" height="22" font="5"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">17</a></text>
+<text top="185" left="258" width="6" height="22" font="4"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">]</a></text>
+<text top="231" left="97" width="310" height="26" font="3"><b>How to ensure these characteristics</b></text>
+<text top="270" left="97" width="694" height="22" font="4">The following approaches are useful not because they are fashionable, but because they </text>
+<text top="296" left="97" width="698" height="22" font="4">improve one or more of the characteristics above. Each one also carries real costs, so the </text>
+<text top="322" left="97" width="388" height="22" font="4">goal is not ideological purity but better trade-offs.</text>
+<text top="363" left="97" width="196" height="22" font="6"><b>Vertical slices architecture</b></text>
+<text top="394" left="97" width="716" height="22" font="4">Vertical slices architecture organizes code around concrete user-facing capabilities instead </text>
+<text top="420" left="97" width="727" height="22" font="4">of technical layers alone. The goal is that a feature can be understood, changed, and verified </text>
+<text top="446" left="97" width="722" height="22" font="4">mostly within its own slice, without having to coordinate across half the system. This works </text>
+<text top="472" left="97" width="689" height="22" font="4">especially well when each slice reflects a business capability or bounded context rather </text>
+<text top="497" left="97" width="218" height="22" font="4">than an arbitrary UI path.  <a href="https://martinfowler.com/bliki/BoundedContext.html">[</a></text>
+<text top="497" left="315" width="9" height="22" font="5"><a href="https://martinfowler.com/bliki/BoundedContext.html">3</a></text>
+<text top="497" left="324" width="16" height="22" font="4">] <a href="https://martinfowler.com/articles/microservices.html">[</a></text>
+<text top="497" left="341" width="9" height="22" font="5"><a href="https://martinfowler.com/articles/microservices.html">4</a></text>
+<text top="497" left="350" width="6" height="22" font="4"><a href="https://martinfowler.com/articles/microservices.html">]</a></text>
+<text top="532" left="97" width="725" height="22" font="4">For agentic engineering, vertical slices also reduce exploration cost. A slice gives the agent a </text>
+<text top="558" left="97" width="698" height="22" font="4">smaller semantic search space, clearer ownership, and a more obvious test surface. That </text>
+<text top="584" left="97" width="421" height="22" font="4">improves locality and navigability at the same time.  <a href="https://microservices.io/patterns/decomposition/service-per-team.html">[</a></text>
+<text top="584" left="518" width="9" height="22" font="5"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">5</a></text>
+<text top="584" left="528" width="16" height="22" font="4"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">]</a> [</text>
+<text top="584" left="544" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="584" left="553" width="6" height="22" font="4"><a href="https://openai.com/index/harness-engineering/">]</a></text>
+<text top="619" left="97" width="705" height="22" font="4">The trade-offs are real. Shared technical concerns can become harder to standardize, and </text>
+<text top="645" left="97" width="648" height="22" font="4">implementing features that span slices or services can require more coordination. </text>
+<text top="671" left="97" width="720" height="22" font="4">Richardson explicitly notes that finer-grained decomposition improves maintainability and </text>
+<text top="697" left="97" width="325" height="22" font="4">deployability, but also adds complexity.  <a href="https://microservices.io/patterns/decomposition/service-per-team.html">[</a></text>
+<text top="697" left="423" width="9" height="22" font="5"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">5</a></text>
+<text top="697" left="432" width="6" height="22" font="4"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">]</a></text>
+<text top="737" left="97" width="153" height="22" font="6"><b>Coupling &amp; cohesion</b></text>
+<text top="769" left="97" width="717" height="22" font="4">Coupling and cohesion describe whether code that belongs together actually lives together, </text>
+<text top="795" left="97" width="696" height="22" font="4">and whether unrelated things are kept apart. High cohesion means a module has a clear </text>
+<text top="820" left="97" width="704" height="22" font="4">purpose; low coupling means that purpose does not depend on hidden knowledge spread </text>
+<text top="846" left="97" width="660" height="22" font="4">across the rest of the codebase. Parnas’s and Larman’s arguments point in the same </text>
+<text top="872" left="97" width="673" height="22" font="4">direction: hide volatile design decisions and protect clients from expected variation.  [</text>
+<text top="872" left="771" width="9" height="22" font="5"><a href="https://prl.khoury.northeastern.edu/img/p-tr-1971.pdf">1</a></text>
+<text top="872" left="780" width="16" height="22" font="4">] <a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">[</a></text>
+<text top="872" left="796" width="9" height="22" font="5"><a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">2</a></text>
+<text top="872" left="805" width="6" height="22" font="4">]</text>
+<text top="907" left="97" width="681" height="22" font="4">In an agentic repo, this has a second-order effect on context quality. Cohesive modules </text>
+<text top="933" left="97" width="688" height="22" font="4">make retrieval cleaner because the files an agent opens are more likely to belong to the </text>
+<text top="959" left="97" width="687" height="22" font="4">same concern; loosely coupled modules make the agent’s inferred contract more stable </text>
+<text top="985" left="97" width="526" height="22" font="4">because fewer unrelated files silently participate in the behavior.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="985" left="624" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="985" left="633" width="16" height="22" font="4"><a href="https://openai.com/index/harness-engineering/">]</a> [</text>
+<text top="985" left="649" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">7</a></text>
+<text top="985" left="658" width="6" height="22" font="4"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">]</a></text>
+<text top="1020" left="97" width="690" height="22" font="4">The trade-off is that stronger interfaces can increase friction at boundaries. A team that </text>
+<text top="1045" left="97" width="679" height="22" font="4">aggressively decomposes everything may gain cleaner contracts but lose flow through </text>
+<text top="1071" left="97" width="164" height="22" font="4">excess coordination. </text>
+</page>
+<page number="5" position="absolute" top="0" left="0" height="1188" width="918">
+<text top="81" left="97" width="249" height="22" font="6"><b>Avoiding unnecessary complexity</b></text>
+<text top="113" left="97" width="640" height="22" font="4">Avoiding unnecessary complexity means resisting abstractions, indirections, and </text>
+<text top="138" left="97" width="696" height="22" font="4">generalizations that do not solve a current problem. Complexity is not only a readability </text>
+<text top="164" left="97" width="727" height="22" font="4">issue; it expands the amount of context required to make safe changes. OpenAI’s experience </text>
+<text top="190" left="97" width="660" height="22" font="4">with agent-first development makes this very concrete: a giant manual, a sprawling </text>
+<text top="216" left="97" width="620" height="22" font="4">abstraction layer, or a maze of special cases all crowd out the relevant signal.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="216" left="718" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="216" left="727" width="16" height="22" font="4"><a href="https://openai.com/index/harness-engineering/">]</a> [</text>
+<text top="216" left="743" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">7</a></text>
+<text top="216" left="752" width="6" height="22" font="4">]</text>
+<text top="251" left="130" width="366" height="21" font="2"><i>“You must pick your battles in design.” — Larman</i></text>
+<text top="283" left="97" width="694" height="22" font="4">That does not mean “never abstract.” It means introducing indirection where it protects </text>
+<text top="309" left="97" width="720" height="22" font="4">meaningful variation, not where it merely advertises cleverness. If the abstraction does not </text>
+<text top="335" left="97" width="644" height="22" font="4">reduce the cost of future change, it often raises the cost of navigation, testing, and </text>
+<text top="361" left="97" width="162" height="22" font="4">debugging instead.  [</text>
+<text top="361" left="260" width="9" height="22" font="5"><a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">2</a></text>
+<text top="361" left="269" width="6" height="22" font="4"><a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">]</a></text>
+<text top="402" left="97" width="287" height="22" font="6"><b>Docs-driven Agentic Engineering (DEA)</b></text>
+<text top="433" left="97" width="708" height="22" font="4">Docs-driven Agentic Engineering (DEA) means making semantics, boundaries, workflows, </text>
+<text top="459" left="97" width="710" height="22" font="4">and decision-relevant context explicit in durable documentation before they are scattered </text>
+<text top="485" left="97" width="709" height="22" font="4">across code, chat history, and individual assumptions. In practice, that gives both humans </text>
+<text top="511" left="97" width="670" height="22" font="4">and agents a stable source of truth instead of forcing them to reconstruct intent from </text>
+<text top="537" left="97" width="258" height="22" font="4">partial implementation details.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="537" left="356" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="537" left="365" width="16" height="22" font="4"><a href="https://openai.com/index/harness-engineering/">]</a> [</text>
+<text top="537" left="381" width="9" height="22" font="5"><a href="https://abseil.io/resources/swe-book/html/ch10.html">9</a></text>
+<text top="537" left="390" width="6" height="22" font="4"><a href="https://abseil.io/resources/swe-book/html/ch10.html">]</a></text>
+<text top="572" left="130" width="653" height="21" font="2"><i>“Documentation is often so tightly coupled to code that it should… be treated as code.” — </i></text>
+<text top="595" left="130" width="231" height="21" font="2"><i>Software Engineering at Google</i></text>
+<text top="628" left="97" width="691" height="22" font="4">This section benefits from a stronger claim than the draft currently makes: docs are not </text>
+<text top="653" left="97" width="723" height="22" font="4">only explanatory artifacts, they are navigation and control surfaces for agents. OpenAI uses </text>
+<text top="679" left="97" width="715" height="22" font="4">repository knowledge as the system of record; Cognition recommends adding repo-specific </text>
+<text top="705" left="97" width="683" height="22" font="4">knowledge and playbooks; and Google’s documentation chapter argues for ownership, </text>
+<text top="731" left="97" width="369" height="22" font="4">review, source control, and freshness checks.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="731" left="466" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="731" left="476" width="16" height="22" font="4"><a href="https://openai.com/index/harness-engineering/">]</a> [</text>
+<text top="731" left="492" width="9" height="22" font="5"><a href="https://abseil.io/resources/swe-book/html/ch10.html">9</a></text>
+<text top="731" left="501" width="16" height="22" font="4"><a href="https://abseil.io/resources/swe-book/html/ch10.html">]</a> [</text>
+<text top="731" left="517" width="18" height="22" font="5"><a href="https://cognition.ai/blog/how-cognition-uses-devin-to-build-devin">18</a></text>
+<text top="731" left="535" width="6" height="22" font="4">]</text>
+<text top="766" left="97" width="712" height="22" font="4">The trade-off is maintenance overhead. Stale documentation can produce false confidence </text>
+<text top="792" left="97" width="718" height="22" font="4">faster than no documentation at all. The antidote is to keep docs close to code, review them </text>
+<text top="818" left="97" width="698" height="22" font="4">with code changes, and make key architecture and workflow documents measurable for </text>
+<text top="844" left="97" width="261" height="22" font="4">freshness or verification status.  <a href="https://openai.com/index/harness-engineering/">[</a></text>
+<text top="844" left="358" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="844" left="368" width="16" height="22" font="4">] <a href="https://abseil.io/resources/swe-book/html/ch10.html">[</a></text>
+<text top="844" left="384" width="9" height="22" font="5"><a href="https://abseil.io/resources/swe-book/html/ch10.html">9</a></text>
+<text top="844" left="393" width="6" height="22" font="4"><a href="https://abseil.io/resources/swe-book/html/ch10.html">]</a></text>
+<text top="884" left="97" width="33" height="22" font="6"><b>BDD</b></text>
+<text top="916" left="97" width="691" height="22" font="4">BDD, in the broad sense, means describing behavior from the perspective of observable </text>
+<text top="942" left="97" width="686" height="22" font="4">outcomes rather than internal implementation first. It pushes teams to define what the </text>
+<text top="967" left="97" width="726" height="22" font="4">system should do in concrete scenarios before they get lost in technical details. That matters </text>
+<text top="993" left="97" width="722" height="22" font="4">for agents because evaluation loops only work well when the expected behavior is stated in </text>
+<text top="1019" left="97" width="232" height="22" font="4">a form the agent can verify.  [</text>
+<text top="1019" left="329" width="18" height="22" font="5"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">16</a></text>
+<text top="1019" left="347" width="16" height="22" font="4">] <a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">[</a></text>
+<text top="1019" left="364" width="18" height="22" font="5"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">17</a></text>
+<text top="1019" left="382" width="6" height="22" font="4"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">]</a></text>
+<text top="1054" left="97" width="706" height="22" font="4">The draft currently connects BDD to boundary integrity and rebuild scope, which is right, </text>
+<text top="1080" left="97" width="654" height="22" font="4">but there is another benefit worth naming: behavior-first examples reduce prompt </text>
+</page>
+<page number="6" position="absolute" top="0" left="0" height="1188" width="918">
+<text top="81" left="97" width="721" height="22" font="4">ambiguity. Instead of telling an agent to “fix pricing,” you can point it to concrete scenarios, </text>
+<text top="107" left="97" width="654" height="22" font="4">acceptance checks, or contract tests that define success without over-specifying the </text>
+<text top="133" left="97" width="145" height="22" font="4">implementation.  <a href="https://abseil.io/resources/swe-book/html/ch11.html">[</a></text>
+<text top="133" left="242" width="18" height="22" font="5"><a href="https://abseil.io/resources/swe-book/html/ch11.html">10</a></text>
+<text top="133" left="261" width="16" height="22" font="4"><a href="https://abseil.io/resources/swe-book/html/ch11.html">]</a> [</text>
+<text top="133" left="277" width="18" height="22" font="5"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">17</a></text>
+<text top="133" left="295" width="6" height="22" font="4">]</text>
+<text top="168" left="97" width="660" height="22" font="4">The trade-off is ceremony. When scenarios become rote documentation rather than </text>
+<text top="194" left="97" width="627" height="22" font="4">decision-making tools, they add maintenance cost without improving feedback. </text>
+<text top="234" left="97" width="260" height="22" font="6"><b>Avoiding premature generalization</b></text>
+<text top="266" left="97" width="671" height="22" font="4">Avoiding premature generalization means refusing to introduce shared abstractions, </text>
+<text top="292" left="97" width="694" height="22" font="4">flexible configuration layers, or generic building blocks before there is enough evidence </text>
+<text top="318" left="97" width="710" height="22" font="4">that the behavior is truly shared. It is usually cheaper to extract later than to maintain the </text>
+<text top="344" left="97" width="237" height="22" font="4">wrong abstraction too early.  [</text>
+<text top="344" left="334" width="9" height="22" font="5"><a href="https://prl.khoury.northeastern.edu/img/p-tr-1971.pdf">1</a></text>
+<text top="344" left="343" width="16" height="22" font="4">] <a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">[</a></text>
+<text top="344" left="359" width="9" height="22" font="5"><a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">2</a></text>
+<text top="344" left="369" width="6" height="22" font="4">]</text>
+<text top="378" left="97" width="680" height="22" font="4">This matters disproportionately in agentic codebases because speculative abstractions </text>
+<text top="404" left="97" width="692" height="22" font="4">expand the search space. An agent confronted with a premature “platform” layer has to </text>
+<text top="430" left="97" width="670" height="22" font="4">infer whether the true behavior lives in the feature code, the generic framework, the </text>
+<text top="456" left="97" width="283" height="22" font="4">configuration surface, or all three.  [</text>
+<text top="456" left="381" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="456" left="390" width="16" height="22" font="4"><a href="https://openai.com/index/harness-engineering/">]</a> [</text>
+<text top="456" left="406" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">7</a></text>
+<text top="456" left="415" width="6" height="22" font="4">]</text>
+<text top="491" left="97" width="718" height="22" font="4">When extraction is actually needed, patterns such as branch by abstraction let teams move </text>
+<text top="517" left="97" width="583" height="22" font="4">toward a shared seam gradually instead of forcing a big-bang migration.  [</text>
+<text top="517" left="680" width="18" height="22" font="5"><a href="https://martinfowler.com/bliki/BranchByAbstraction.html">14</a></text>
+<text top="517" left="699" width="6" height="22" font="4"><a href="https://martinfowler.com/bliki/BranchByAbstraction.html">]</a></text>
+<text top="557" left="97" width="249" height="22" font="6"><b>Avoiding premature optimization</b></text>
+<text top="589" left="97" width="712" height="22" font="4">Avoiding premature optimization means not distorting the structure of the system around </text>
+<text top="615" left="97" width="689" height="22" font="4">performance concerns that are not yet real constraints. Once optimization becomes the </text>
+<text top="641" left="97" width="721" height="22" font="4">driver too early, the codebase often becomes harder to understand, change, and verify long </text>
+<text top="666" left="97" width="712" height="22" font="4">before the performance gain is actually needed. For agents, this usually manifests as extra </text>
+<text top="692" left="97" width="728" height="22" font="4">caches, specialized execution paths, and implicit invariants that are poorly documented and </text>
+<text top="718" left="97" width="199" height="22" font="4">hard to validate locally.  [</text>
+<text top="718" left="297" width="18" height="22" font="5"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">16</a></text>
+<text top="718" left="315" width="16" height="22" font="4">] <a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">[</a></text>
+<text top="718" left="331" width="18" height="22" font="5"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">17</a></text>
+<text top="718" left="350" width="6" height="22" font="4"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">]</a></text>
+<text top="753" left="97" width="629" height="22" font="4">That does not rule out performance-first design for real hot paths. It means that </text>
+<text top="779" left="97" width="695" height="22" font="4">performance work should be driven by measured constraints and reinforced by explicit </text>
+<text top="805" left="97" width="720" height="22" font="4">tests or budgets, not by speculative complexity. Evaluation loops against latency targets are </text>
+<text top="831" left="97" width="718" height="22" font="4">a better fit for agents than architecture distorted in advance around imagined bottlenecks.  </text>
+<text top="857" left="97" width="6" height="22" font="4"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">[</a></text>
+<text top="857" left="103" width="18" height="22" font="5"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">17</a></text>
+<text top="857" left="122" width="6" height="22" font="4"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">]</a></text>
+<text top="903" left="97" width="95" height="26" font="3"><b>Conclusion</b></text>
+<text top="942" left="97" width="650" height="22" font="4">A maintainable agentic codebase is not one with the most abstractions or the most </text>
+<text top="968" left="97" width="723" height="22" font="4">documents. It is one where change can stay local, side effects remain contained, boundaries </text>
+<text top="994" left="97" width="700" height="22" font="4">are explicit, the structure is navigable, and verification is narrow enough to fit inside the </text>
+<text top="1020" left="97" width="698" height="22" font="4">agent’s own loop. Those properties are valuable for humans too; agents simply make the </text>
+<text top="1045" left="97" width="362" height="22" font="4">cost of neglecting them visible much sooner.  [</text>
+<text top="1045" left="460" width="9" height="22" font="5"><a href="https://openai.com/index/harness-engineering/">6</a></text>
+<text top="1045" left="469" width="16" height="22" font="4">] <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">[</a></text>
+<text top="1045" left="485" width="9" height="22" font="5"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">7</a></text>
+<text top="1045" left="494" width="16" height="22" font="4">] <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">[</a></text>
+<text top="1045" left="510" width="18" height="22" font="5"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">16</a></text>
+<text top="1045" left="529" width="6" height="22" font="4"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">]</a></text>
+</page>
+<page number="7" position="absolute" top="0" left="0" height="1188" width="918">
+	<fontspec id="7" size="15" family="EAAAAA+NotoSerif" color="#000000"/>
+	<fontspec id="8" size="15" family="EAAAAA+NotoSerif" color="#0563c1"/>
+<text top="81" left="97" width="97" height="26" font="3"><b>References</b></text>
+<text top="120" left="97" width="23" height="20" font="7">[1<a href="https://prl.khoury.northeastern.edu/img/p-tr-1971.pdf">] </a></text>
+<text top="120" left="120" width="616" height="20" font="8"><a href="https://prl.khoury.northeastern.edu/img/p-tr-1971.pdf">D. L. Parnas, “On the Criteria To Be Used in Decomposing Systems into Modules,” 1971.</a></text>
+<text top="151" left="97" width="23" height="20" font="7">[2<a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">] </a></text>
+<text top="151" left="120" width="648" height="20" font="8"><a href="https://www.martinfowler.com/ieeeSoftware/protectedVariation.pdf">Craig Larman, “Protected Variation: The Importance of Being Closed,” IEEE Software, 2001.</a></text>
+<text top="182" left="97" width="23" height="20" font="7">[3<a href="https://martinfowler.com/bliki/BoundedContext.html">] </a></text>
+<text top="182" left="120" width="251" height="20" font="8"><a href="https://martinfowler.com/bliki/BoundedContext.html">Martin Fowler, “Bounded Context.”</a></text>
+<text top="213" left="97" width="23" height="20" font="7">[4<a href="https://martinfowler.com/articles/microservices.html">] </a></text>
+<text top="213" left="120" width="351" height="20" font="8"><a href="https://martinfowler.com/articles/microservices.html">Martin Fowler and James Lewis, “Microservices.”</a></text>
+<text top="244" left="97" width="23" height="20" font="7">[5<a href="https://microservices.io/patterns/decomposition/service-per-team.html">] </a></text>
+<text top="244" left="120" width="268" height="20" font="8"><a href="https://microservices.io/patterns/decomposition/service-per-team.html">Chris Richardson, “Service per team.”</a></text>
+<text top="275" left="97" width="23" height="20" font="7">[6<a href="https://openai.com/index/harness-engineering/">] </a></text>
+<text top="275" left="120" width="522" height="20" font="8"><a href="https://openai.com/index/harness-engineering/">OpenAI, “Harness engineering: leveraging Codex in an agent-first world.”</a></text>
+<text top="306" left="97" width="23" height="20" font="7">[7<a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">] </a></text>
+<text top="306" left="120" width="401" height="20" font="8"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic, “Effective context engineering for AI agents.”</a></text>
+<text top="337" left="97" width="23" height="20" font="7">[8<a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">] </a></text>
+<text top="337" left="120" width="407" height="20" font="8"><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">Anthropic, “Effective harnesses for long-running agents.”</a></text>
+<text top="368" left="97" width="23" height="20" font="7">[9<a href="https://abseil.io/resources/swe-book/html/ch10.html">] </a></text>
+<text top="368" left="120" width="433" height="20" font="8"><a href="https://abseil.io/resources/swe-book/html/ch10.html">Software Engineering at Google, Chapter 10: Documentation.</a></text>
+<text top="399" left="97" width="31" height="20" font="7">[10] </text>
+<text top="399" left="129" width="447" height="20" font="8"><a href="https://abseil.io/resources/swe-book/html/ch11.html">Software Engineering at Google, Chapter 11: Testing Overview.</a></text>
+<text top="430" left="97" width="31" height="20" font="7">[11] </text>
+<text top="430" left="129" width="410" height="20" font="8"><a href="https://abseil.io/resources/swe-book/html/ch17.html">Software Engineering at Google, Chapter 17: Code Search.</a></text>
+<text top="461" left="97" width="31" height="20" font="7">[12] </text>
+<text top="461" left="129" width="149" height="20" font="8"><a href="https://bazel.build/basics/hermeticity">Bazel, “Hermeticity.”</a></text>
+<text top="491" left="97" width="31" height="20" font="7">[13] </text>
+<text top="491" left="129" width="316" height="20" font="8"><a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/test/test-impact-analysis?view=azure-devops">Microsoft Learn, “Use Test Impact Analysis.”</a></text>
+<text top="522" left="97" width="31" height="20" font="7">[14] </text>
+<text top="522" left="129" width="289" height="20" font="8"><a href="https://martinfowler.com/bliki/BranchByAbstraction.html">Martin Fowler, “Branch By Abstraction.”</a></text>
+<text top="553" left="97" width="31" height="20" font="7">[15] </text>
+<text top="553" left="129" width="361" height="20" font="8"><a href="https://martinfowler.com/articles/patterns-legacy-displacement/">Martin Fowler, “Patterns of Legacy Displacement.”</a></text>
+<text top="584" left="97" width="31" height="20" font="7">[16] </text>
+<text top="584" left="129" width="496" height="20" font="8"><a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">Martin Fowler, “Humans and Agents in Software Engineering Loops.”</a></text>
+<text top="615" left="97" width="31" height="20" font="7">[17] </text>
+<text top="615" left="129" width="451" height="20" font="8"><a href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team/">OpenAI Developers, “Building an AI-Native Engineering Team.”</a></text>
+<text top="646" left="97" width="31" height="20" font="7">[18] </text>
+<text top="646" left="129" width="388" height="20" font="8"><a href="https://cognition.ai/blog/how-cognition-uses-devin-to-build-devin">Cognition, “How Cognition Uses Devin to Build Devin.”</a></text>
+<text top="677" left="97" width="31" height="20" font="7">[19] </text>
+<text top="677" left="129" width="391" height="20" font="8"><a href="https://arxiv.org/html/2603.05344v2">“Building Effective AI Coding Agents for the Terminal.”</a></text>
+<text top="708" left="97" width="31" height="20" font="7">[20] </text>
+<text top="708" left="129" width="542" height="20" font="8"><a href="https://arxiv.org/html/2603.00601v4">“Theory of Code Space: Do Code Agents Understand Software Architecture?”</a></text>
+</page>
+<outline>
+<item page="1">Introduction</item>
+<item page="1">Characteristics that matter</item>
+<outline>
+<item page="1">Locality</item>
+<item page="2">Blast radius</item>
+<item page="2">Boundary integrity</item>
+<item page="3">Navigability</item>
+<item page="3">Rebuild/test scope</item>
+</outline>
+<item page="4">How to ensure these characteristics</item>
+<outline>
+<item page="4">Vertical slices architecture</item>
+<item page="4">Coupling &amp; cohesion</item>
+<item page="5">Avoiding unnecessary complexity</item>
+<item page="5">Docs-driven Agentic Engineering (DEA)</item>
+<item page="5">BDD</item>
+<item page="6">Avoiding premature generalization</item>
+<item page="6">Avoiding premature optimization</item>
+</outline>
+<item page="6">Conclusion</item>
+<item page="7">References</item>
+</outline>
+</pdf2xml>

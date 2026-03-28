@@ -12,6 +12,9 @@ layout: default
 <section class="post-list">
   {% for post in site.posts %}
     <article class="post-item">
+      {% if post.header_kicker %}
+        <p class="content-header__kicker post-item__kicker">{{ post.header_kicker | escape }}</p>
+      {% endif %}
       <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
       <p class="post-item__meta">
         <span>{{ post.date | date: "%-d %b, %Y" }}</span>

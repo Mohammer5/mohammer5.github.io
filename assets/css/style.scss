@@ -295,6 +295,20 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--line);
 }
 
+.content-header__kicker {
+  margin: 0 0 12px;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.post-item__kicker {
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
 .content-header h1 {
   font-size: 2.2rem;
   line-height: 1.3;
